@@ -1,0 +1,40 @@
+{
+  "models": {
+    "granite": {
+      "model_name": "ibm-granite/granite-4.0-h-tiny",
+      "display_name": "IBM Granite 4.0-h-tiny"
+    },
+    "qwen": {
+      "model_name": "Qwen/Qwen3-4B",
+      "display_name": "Qwen3 4b"
+    }
+  },
+  "evaluation": {
+    "embedding_model": "thomas-sounack/BioClinical-ModernBERT-base",
+    "entity_model": "OpenMed/OpenMed-NER-PharmaDetect-SuperClinical-434M",
+    "device": "auto",
+    "batch_size": 1
+  },
+  "generation": {
+    "max_new_tokens": 256,
+    "temperature": 0.2,
+    "top_p": 0.9,
+    "do_sample": false,
+    "torch_dtype": "auto",
+    "trust_remote_code": true
+  },
+  "paths": {
+    "results_dir": "results",
+    "metrics_dir": "metrics",
+    "plots_dir": "plots",
+    "report_path": "comparison_report.md"
+  },
+  "readiness_weights": {
+    "semantic_similarity": 25,
+    "entity_recall": 25,
+    "readability_compliance": 15,
+    "hallucination": 15,
+    "critical_safety": 15,
+    "latency": 5
+  }
+}

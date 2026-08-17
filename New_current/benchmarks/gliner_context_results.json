@@ -1,0 +1,75 @@
+{
+  "device": "cpu",
+  "qwen_model": "Qwen/Qwen3-0.6B",
+  "gliner_model": "Ihor/gliner-biomed-large-v1.0",
+  "max_new_tokens": 8,
+  "qwen_skipped": true,
+  "results": [
+    {
+      "mode": "before",
+      "pages": 1,
+      "total_ms": 11927.2,
+      "gliner_ms": 11905.6,
+      "qwen_ms": 0.0,
+      "peak_ram_mb": 2614.3,
+      "average_chunk_characters": 1460.5,
+      "chunks": 2,
+      "qwen_evidence_characters": 2921
+    },
+    {
+      "mode": "after",
+      "pages": 1,
+      "total_ms": 12835.6,
+      "gliner_ms": 12819.3,
+      "qwen_ms": 0.0,
+      "peak_ram_mb": 2882.0,
+      "average_chunk_characters": 1460.5,
+      "chunks": 2,
+      "qwen_evidence_characters": 2134
+    },
+    {
+      "mode": "before",
+      "pages": 4,
+      "total_ms": 44753.5,
+      "gliner_ms": 44709.5,
+      "qwen_ms": 0.0,
+      "peak_ram_mb": 2722.5,
+      "average_chunk_characters": 1865.7,
+      "chunks": 6,
+      "qwen_evidence_characters": 11194
+    },
+    {
+      "mode": "after",
+      "pages": 4,
+      "total_ms": 36458.6,
+      "gliner_ms": 36395.7,
+      "qwen_ms": 0.0,
+      "peak_ram_mb": 3393.4,
+      "average_chunk_characters": 1865.7,
+      "chunks": 6,
+      "qwen_evidence_characters": 6608
+    },
+    {
+      "mode": "before",
+      "pages": 10,
+      "total_ms": 115073.5,
+      "gliner_ms": 114990.7,
+      "qwen_ms": 0.0,
+      "peak_ram_mb": 2664.7,
+      "average_chunk_characters": 1893.1,
+      "chunks": 15,
+      "qwen_evidence_characters": 28396
+    },
+    {
+      "mode": "after",
+      "pages": 10,
+      "total_ms": 92191.6,
+      "gliner_ms": 92049.2,
+      "qwen_ms": 0.0,
+      "peak_ram_mb": 3492.1,
+      "average_chunk_characters": 1893.1,
+      "chunks": 15,
+      "qwen_evidence_characters": 6462
+    }
+  ]
+}

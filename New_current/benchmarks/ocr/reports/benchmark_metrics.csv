@@ -1,0 +1,13 @@
+provider,device,document,metric,value,unit,status
+qwen3-vl,cpu,all,model_loading_time,,ms,FAIL
+qwen3-vl,cpu,png,first_inference_latency,,ms,FAIL
+qwen3-vl,cpu,png,warm_inference_latency_mean,,ms,FAIL
+qwen3-vl,cuda,all,model_loading_time,,ms,NOT VERIFIED
+qwen3-vl,cuda,png,first_inference_latency,,ms,NOT VERIFIED
+qwen3-vl,cuda,png,warm_inference_latency_mean,,ms,NOT VERIFIED
+symspell,cpu,synthetic_text,regex_latency,1.452,ms,PASS
+symspell,cpu,synthetic_text,regex_corrections,11,count,PASS
+symspell,cpu,synthetic_text,medical_abbreviation_dictionary_latency,0.024,ms,PASS
+symspell,cpu,synthetic_text,medical_abbreviation_dictionary_corrections,1,count,PASS
+symspell,cpu,synthetic_text,symspell_latency,0.177,ms,PASS
+symspell,cpu,synthetic_text,symspell_corrections,1,count,PASS

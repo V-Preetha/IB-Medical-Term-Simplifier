@@ -1,0 +1,30 @@
+{
+  "schema_version": "ner-evaluation-config-v1",
+  "device": "cpu",
+  "confidence_threshold": 0.5,
+  "max_tokens": 512,
+  "label_mappings": {
+    "openmed-gliner": {},
+    "biomedical-ner-all": {
+      "Disease_disorder": "Disease",
+      "Sign_symptom": "Symptom",
+      "Medication": "Medication",
+      "Therapeutic_procedure": "Procedure",
+      "Diagnostic_procedure": "Procedure",
+      "Biological_structure": "Anatomy",
+      "Lab_value": "Measurement",
+      "Dosage": "Measurement",
+      "Quantitative_concept": "Measurement",
+      "Mass": "Measurement",
+      "Volume": "Measurement",
+      "Weight": "Measurement",
+      "Height": "Measurement"
+    },
+    "modernbert-biomedical-ner": {
+      "DISEASE": "Disease",
+      "SMALL_MOLECULE": "Medication",
+      "TISSUE": "Anatomy",
+      "EXP_ASSAY": "Laboratory Test"
+    }
+  }
+}

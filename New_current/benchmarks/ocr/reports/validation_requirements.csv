@@ -1,0 +1,14 @@
+requirement,status,evidence
+Model manifest verification,PASS,"Every manifest model, immutable revision, provider configuration, and local snapshot was verified."
+Qwen3-VL loads correctly,FAIL,The PDF exceeds the configured 1-page limit.
+OCR runs on CPU,FAIL,The PDF exceeds the configured 1-page limit.
+OCR runs on CUDA (if available),NOT VERIFIED,did not run
+PDF,NOT VERIFIED,Decoder PASS; live Qwen3-VL The PDF exceeds the configured 1-page limit.
+Multi-page PDF,NOT VERIFIED,Decoder PASS; live Qwen3-VL The PDF exceeds the configured 1-page limit.
+PNG,NOT VERIFIED,Decoder PASS; live Qwen3-VL The PDF exceeds the configured 1-page limit.
+JPEG,NOT VERIFIED,Decoder PASS; live Qwen3-VL The PDF exceeds the configured 1-page limit.
+TIFF,NOT VERIFIED,Decoder PASS; live Qwen3-VL The PDF exceeds the configured 1-page limit.
+Confidence generation,NOT VERIFIED,No live model confidence values were produced.
+Processing time,NOT VERIFIED,No live model inference timings were produced.
+OCR postprocessing,PASS,Synthetic pipeline completed with 13 corrections in 1.715 ms.
+Structured logging,PASS,Captured 3 provider records with structured lifecycle/stage fields.

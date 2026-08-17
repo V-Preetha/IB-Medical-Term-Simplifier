@@ -1,0 +1,10 @@
+patient 1000
+blood 950
+pressure 900
+hemoglobin 850
+normal 800
+elevated 750
+result 700
+level 650
+glucose 600
+report 550

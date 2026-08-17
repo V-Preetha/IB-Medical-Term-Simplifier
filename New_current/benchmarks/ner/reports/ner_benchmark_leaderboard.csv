@@ -1,0 +1,4 @@
+rank,candidate,macro_f1_score,overall_f1_score,mean_inference_latency_ms
+1,biomedical-ner-all,0.38125,0.333333,22.6545
+2,modernbert-biomedical-ner,0.170833,0.222222,56.28925
+3,openmed-gliner,0.083333,0.086957,114.42775

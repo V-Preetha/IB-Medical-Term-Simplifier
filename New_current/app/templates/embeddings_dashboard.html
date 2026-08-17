@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IB Health Medical Embeddings Console</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/embeddings_dashboard.css" rel="stylesheet">
+</head>
+<body>
+  <main class="container py-4" data-schema-version="{{ schema_version }}">
+    <header class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+      <div><p class="text-uppercase text-primary fw-semibold mb-1">IB Health Engineering</p>
+        <h1 class="h2 mb-0">Medical Embeddings Console</h1></div>
+      <nav class="d-flex gap-2"><a class="btn btn-outline-secondary" href="/ner">NER Console</a>
+        <a class="btn btn-primary" href="/docs">Swagger</a></nav>
+    </header>
+    <div id="alert" class="alert d-none" role="alert"></div>
+    <section class="card shadow-sm mb-4"><div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h5 mb-0">Provider health</h2>
+        <button id="refresh-health" class="btn btn-sm btn-outline-primary">Refresh</button>
+      </div><pre id="health-output" class="output">Loading…</pre>
+    </div></section>
+    <section class="card shadow-sm mb-4"><div class="card-body">
+      <h2 class="h5">Embedding batch</h2>
+      <p class="text-secondary">Enter one synthetic or de-identified medical segment per line. Vectors are returned directly and are not stored.</p>
+      <textarea id="batch-text" class="form-control mb-3" rows="8" maxlength="200000" placeholder="Metformin is prescribed for type 2 diabetes.&#10;HbA1c was measured during follow-up."></textarea>
+      <button id="generate" class="btn btn-primary">Generate embeddings</button>
+    </div></section>
+    <section class="card shadow-sm"><div class="card-body">
+      <div class="row g-3 mb-4">
+        <div class="col-md-3"><div class="metric"><span>Batch</span><strong id="batch-size">—</strong></div></div>
+        <div class="col-md-3"><div class="metric"><span>Dimensions</span><strong id="dimensions">—</strong></div></div>
+        <div class="col-md-3"><div class="metric"><span>Latency</span><strong id="latency">—</strong></div></div>
+        <div class="col-md-3"><div class="metric"><span>Revision</span><strong id="revision">—</strong></div></div>
+      </div>
+      <h2 class="h5">Vector summary</h2>
+      <div class="table-responsive"><table class="table table-sm"><thead><tr><th>Input ID</th><th>Dimensions</th><th>Tokens</th><th>Norm</th><th>Preview</th></tr></thead><tbody id="vectors"><tr><td colspan="5" class="text-secondary">No response yet.</td></tr></tbody></table></div>
+      <h3 class="h6 mt-4">Versioned JSON response</h3><pre id="response-output" class="output">No response yet.</pre>
+    </div></section>
+  </main>
+  <script src="/static/embeddings_dashboard.js"></script>
+</body>
+</html>

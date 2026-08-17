@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IB Health Medical NER Console</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/static/ner_dashboard.css" rel="stylesheet" />
+  </head>
+  <body class="bg-body-tertiary">
+    <nav class="navbar navbar-dark bg-dark px-4">
+      <span class="navbar-brand">IB Health Medical NER Console</span>
+      <div class="d-flex gap-2">
+        <span class="badge text-bg-secondary align-self-center">{{ schema_version }}</span>
+        <a class="btn btn-sm btn-outline-light" href="/">OCR Console</a>
+        <a class="btn btn-sm btn-outline-light" href="/docs" target="_blank">Swagger</a>
+      </div>
+    </nav>
+    <main class="container-fluid p-4">
+      <div id="alert-region" aria-live="polite"></div>
+      <div class="row g-4">
+        <section class="col-xl-4">
+          <div class="card shadow-sm">
+            <div class="card-header"><strong>Normalized OCR text</strong></div>
+            <div class="card-body">
+              <label class="form-label" for="report-select">Completed OCR request</label>
+              <select id="report-select" class="form-select mb-3">
+                <option value="">Paste de-identified OCR text</option>
+              </select>
+              <textarea id="ner-text" class="form-control font-monospace" rows="18" maxlength="200000"
+                placeholder="Paste normalized OCR text here"></textarea>
+              <button id="run-button" class="btn btn-primary mt-3" type="button">Run Medical NER</button>
+            </div>
+          </div>
+        </section>
+        <section class="col-xl-8">
+          <div class="card shadow-sm mb-4">
+            <div class="card-header"><strong>Detected entities</strong></div>
+            <div class="card-body"><div id="highlighted-text" class="text-pane">No result.</div></div>
+          </div>
+          <div class="card shadow-sm">
+            <div class="card-header"><strong>Entity table</strong></div>
+            <div class="card-body table-responsive">
+              <table class="table table-sm align-middle">
+                <thead><tr><th>Text</th><th>Label</th><th>Start</th><th>End</th><th>Confidence</th></tr></thead>
+                <tbody id="entity-table"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <section class="col-lg-5">
+          <div class="card shadow-sm h-100">
+            <div class="card-header"><strong>Production model and health</strong></div>
+            <div class="card-body" id="model-health">Loading...</div>
+          </div>
+        </section>
+        <section class="col-lg-7">
+          <div class="card shadow-sm h-100">
+            <div class="card-header"><strong>Inference metadata</strong></div>
+            <div class="card-body"><div id="metrics-grid" class="row g-3"></div></div>
+          </div>
+        </section>
+        <section class="col-12">
+          <div class="card shadow-sm">
+            <div class="card-header"><strong>JSON response</strong></div>
+            <div class="card-body"><pre id="json-response" class="json-pane">No response.</pre></div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <script src="/static/ner_dashboard.js" defer></script>
+  </body>
+</html>

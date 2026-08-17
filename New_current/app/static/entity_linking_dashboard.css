@@ -1,0 +1,4 @@
+body { background: #f4f7fb; color: #172033; }
+.card { border: 0; border-radius: 1rem; }
+.output { background: #111827; color: #dbeafe; border-radius: .75rem; padding: 1rem; max-height: 30rem; overflow: auto; white-space: pre-wrap; }
+textarea { resize: vertical; }

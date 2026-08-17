@@ -1,0 +1,55 @@
+.drop-zone {
+  border: 2px dashed #6c757d;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  min-height: 180px;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.drop-zone.dragging {
+  background: #e7f1ff;
+  border-color: #0d6efd;
+}
+
+.preview {
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+  height: 420px;
+  object-fit: contain;
+  width: 100%;
+}
+
+.metrics span {
+  color: #6c757d;
+  display: block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.metrics strong {
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  overflow-wrap: anywhere;
+}
+
+.output-pane,
+.log-pane {
+  background: #101820;
+  border-radius: 0.5rem;
+  color: #e8f1f2;
+  margin: 0;
+  max-height: 420px;
+  min-height: 260px;
+  overflow: auto;
+  padding: 1rem;
+  white-space: pre-wrap;
+}
+
+.log-pane {
+  min-height: 320px;
+}

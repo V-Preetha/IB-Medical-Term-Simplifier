@@ -1,0 +1,11 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+
+# Inputs, generated datasets, progress state, and logs may contain PHI.
+reports.csv
+medical_lora_dataset.jsonl
+failed_reports.csv
+checkpoint.json
+pipeline.log

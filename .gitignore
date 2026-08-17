@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+.venv-*/
+venv/
+
+# Environment / secrets
+.env
+.env.*
+!.env.*.example
+
+# Model weights / caches (downloaded, not source — see MODEL_MANIFEST.md for pinned identities)
+.model-cache/
+New_current/New_current/
+
+# Hugging Face / torch caches
+.cache/
+huggingface/
+
+# Logs
+*.log
+*.stdout.log
+*.stderr.log
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local absolute-path configuration
+*.local.json
+
+# Contains a plaintext Hugging Face token — excluded until rotated/scrubbed.
+# See PROJECT_PROGRESS_REPORT_JUNE_AUGUST_2026.md Section 6/9. Do not remove this
+# line without first rotating the token and removing it from the file's contents.
+Evaluation/test.py

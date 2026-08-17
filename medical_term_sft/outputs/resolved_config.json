@@ -1,0 +1,61 @@
+{
+  "model": {
+    "name": "Qwen/Qwen3-4B-Instruct-2507",
+    "trust_remote_code": false,
+    "use_flash_attention": true,
+    "use_4bit": true
+  },
+  "data": {
+    "path": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\sft_data_pipeline\\medical_simplifier_synthetic_5000.jsonl",
+    "split_indices_path": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\medical_term_sft\\outputs\\split_indices.json",
+    "train_ratio": 0.8,
+    "validation_ratio": 0.1,
+    "test_ratio": 0.1,
+    "max_sequence_length": 2048,
+    "num_proc": 1,
+    "inject_report_into_user": true
+  },
+  "lora": {
+    "rank": 32,
+    "alpha": 64,
+    "dropout": 0.05,
+    "target_attention_projections": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ]
+  },
+  "training": {
+    "output_dir": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\medical_term_sft\\outputs",
+    "checkpoint_dir": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\medical_term_sft\\checkpoints",
+    "logging_dir": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\medical_term_sft\\outputs\\tensorboard",
+    "num_train_epochs": 3,
+    "learning_rate": 2e-05,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.05,
+    "lr_scheduler_type": "cosine",
+    "optimizer": "adamw_torch",
+    "per_device_train_batch_size": 1,
+    "per_device_eval_batch_size": 1,
+    "gradient_accumulation_steps": 16,
+    "max_grad_norm": 1.0,
+    "gradient_checkpointing": true,
+    "logging_steps": 10,
+    "save_total_limit": 3,
+    "early_stopping_patience": 3,
+    "dataloader_num_workers": 0,
+    "estimated_tokens_per_second_per_gpu": 900,
+    "seed": 42,
+    "full_determinism": true,
+    "auto_resume": true
+  },
+  "generation": {
+    "max_new_tokens": 1024,
+    "do_sample": false,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "prediction_samples": 25
+  },
+  "config_path": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\medical_term_sft\\configs\\qwen3_8gb.yaml"
+}

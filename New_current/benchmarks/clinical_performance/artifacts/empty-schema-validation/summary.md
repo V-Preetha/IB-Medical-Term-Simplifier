@@ -1,0 +1,12 @@
+# Clinical Performance Benchmark
+
+Status: READY_FOR_APPROVED_RUN_ARTIFACTS
+
+| Candidate | Recommendation |
+| --- | --- |
+| ocr_512px | MORE_VALIDATION_REQUIRED |
+| fp16 | MORE_VALIDATION_REQUIRED |
+| int8 | MORE_VALIDATION_REQUIRED |
+| 4bit | MORE_VALIDATION_REQUIRED |
+| compact_simplification_schema | MORE_VALIDATION_REQUIRED |
+| future_model_replacement | MORE_VALIDATION_REQUIRED |

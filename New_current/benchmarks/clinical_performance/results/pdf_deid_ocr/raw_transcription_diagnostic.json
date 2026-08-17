@@ -1,0 +1,22 @@
+[
+  {
+    "difficulty": "Medium",
+    "processor_ms": 80.131,
+    "prompt_tokens": 201,
+    "elapsed_s": 45.239,
+    "generated_tokens": 134,
+    "tokens_per_second": 2.962,
+    "eos_generated": false,
+    "output_prefix": "Coordinator For Healthplans - Encounter Summary for Susan\nFrances Martin, Electronically signed by Dr. Brittany Gallagher,\nFNP-C\n\nSocial Security Number\n103-15-0825\n\nEncounter\nDate of Start Service\n07/04/1992\nDr. Brittany Gallagher\nContact\n5891 Kennesett Ports, New Amadorant, Wyoming United States -"
+  },
+  {
+    "difficulty": "Hard",
+    "processor_ms": 15.102,
+    "prompt_tokens": 201,
+    "elapsed_s": 45.52,
+    "generated_tokens": 143,
+    "tokens_per_second": 3.141,
+    "eos_generated": false,
+    "output_prefix": "Apollo\nHealth System\nCHRISTIAN CHURCH CITY HOSPITAL\nDEPARTMENT OF PATHOLOGY\nAND ARTIFICIAL SCIENCE\nDiagnostic Form DF-196\nAPOLLO PATHOLOGY ASSOCIATES, INC\n742 Main Avenue\nToledo, OH 43615\n(419) 556-9823\nFINAL PATIENT SUMMARY REPORT\nPATIENT NAME: Jonathan Miller\nMRN: 4832076\nDOB: 07/15/2005 20Y Femal"
+  }
+]

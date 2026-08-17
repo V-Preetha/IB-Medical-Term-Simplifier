@@ -1,0 +1,22 @@
+{
+  "status": "PRECISION_INITIALIZATION_VERIFIED_FULL_QUALITY_SMOKE_BLOCKED",
+  "dataset_id": "pdf_deid_synthetic_medical_v1",
+  "synthetic": true,
+  "contains_real_phi": false,
+  "counts": {"easy": 30, "medium": 10, "hard": 10},
+  "ground_truth": "filename-keyed PHI token lists only; full OCR CER/WER unavailable",
+  "easy_candidate_512px": {
+    "filename": "PDF_Deid_Deidentification_0.pdf",
+    "document_type": "digital_pdf",
+    "page_count": 3,
+    "latency_ms": 23.155,
+    "phi_unique_token_recovery_rate": 0.947368
+  },
+  "precision_profiles": {
+    "float32": {"status": "NOT_DEPLOYABLE_ON_CURRENT_8GB_GPU", "reason": "CUDA OOM at initialization"},
+    "bfloat16": {"status": "INITIALIZATION_PASSED", "load_ms": 24058.935, "allocated_mb": 8519.605, "reserved_mb": 8556.0, "rss_mb": 1542.27},
+    "float16": {"status": "INITIALIZATION_PASSED", "load_ms": 28244.485, "allocated_mb": 8519.605, "reserved_mb": 8556.0, "rss_mb": 7398.59}
+  },
+  "blocker": "BF16 full-quality Medium/Hard smoke at 1600px, 144 DPI, and 2048 max tokens did not finish within the 360-second harness limit; 512px was not run.",
+  "recommendation": "MORE_VALIDATION_REQUIRED"
+}

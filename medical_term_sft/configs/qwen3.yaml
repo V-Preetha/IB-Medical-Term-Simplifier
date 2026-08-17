@@ -1,0 +1,59 @@
+model:
+  # Change this one value to use another compatible Qwen instruction model.
+  name: Qwen/Qwen3-4B-Instruct-2507
+  trust_remote_code: false
+  use_flash_attention: true
+  use_4bit: true
+
+data:
+  path: ../../sft_data_pipeline/medical_simplifier_synthetic_5000.jsonl
+  split_indices_path: ../outputs/split_indices.json
+  train_ratio: 0.80
+  validation_ratio: 0.10
+  test_ratio: 0.10
+  max_sequence_length: 4096
+  num_proc: 1
+  # The source report is stored inside assistant.content.report in the supplied
+  # rows. This puts a copy in the in-memory user prompt without editing JSONL.
+  inject_report_into_user: true
+
+lora:
+  rank: 32
+  alpha: 64
+  dropout: 0.05
+  target_attention_projections:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+
+training:
+  output_dir: ../outputs
+  checkpoint_dir: ../checkpoints
+  logging_dir: ../outputs/tensorboard
+  num_train_epochs: 3
+  learning_rate: 0.00002
+  weight_decay: 0.01
+  warmup_ratio: 0.05
+  lr_scheduler_type: cosine
+  optimizer: adamw_torch
+  per_device_train_batch_size: 1
+  per_device_eval_batch_size: 1
+  gradient_accumulation_steps: 16
+  max_grad_norm: 1.0
+  gradient_checkpointing: true
+  logging_steps: 10
+  save_total_limit: 3
+  early_stopping_patience: 3
+  dataloader_num_workers: 0
+  estimated_tokens_per_second_per_gpu: 1800
+  seed: 42
+  full_determinism: true
+  auto_resume: true
+
+generation:
+  max_new_tokens: 2048
+  do_sample: false
+  temperature: 0.0
+  top_p: 1.0
+  prediction_samples: 25

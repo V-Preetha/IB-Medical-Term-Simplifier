@@ -1,0 +1,19 @@
+{
+  "status": "NOT_VERIFIED",
+  "model": "Qwen/Qwen3-VL-4B-Instruct",
+  "revision": "ebb281ec70b05090aa6165b016eac8ec08e71b17",
+  "dtype": "bfloat16",
+  "device": "auto",
+  "benchmark_profile": {
+    "max_image_size": 512,
+    "pdf_render_dpi": 96,
+    "max_new_tokens": 2048,
+    "timeout_seconds": 300
+  },
+  "requested_documents": {"medium": 2, "hard": 2},
+  "completed_comparisons": 0,
+  "blocker": "The first multi-page structured baseline produced no final result after more than six minutes; the run was terminated before candidate execution.",
+  "cer": "NOT_VERIFIED",
+  "wer": "NOT_VERIFIED",
+  "recommendation": "REJECT"
+}

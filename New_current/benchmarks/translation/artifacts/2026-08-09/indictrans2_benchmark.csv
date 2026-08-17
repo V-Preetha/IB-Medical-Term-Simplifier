@@ -1,0 +1,4 @@
+language,source,translated,latency_ms,protected_values,protected_values_preserved
+hin_Deva,HbA1c is 8.7%. Metformin 500 mg twice daily.,एच. बी. ए. 1. सी. 8.7% है. मेटफॉर्मिन 500 mg दिन में दो बार।,3708.981,"('8.7%', '500 mg')",True
+tam_Taml,Blood pressure is 140/90 mmHg. Glucose is 126 mg/dL.,இரத்த அழுத்தம் 140/90 mmHg. குளுக்கோஸ் 126 mg/dL.,1734.264,"('140/90 mmHg', '126 mg/dL')",True
+kan_Knda,Stage II breast cancer follow-up is dated 15/10/2024.,ಎರಡನೇ ಹಂತದ ಸ್ತನ ಕ್ಯಾನ್ಸರ್ ಫಾಲೋ-ಅಪ್ ದಿನಾಂಕವನ್ನು ನಿಗದಿಪಡಿಸಲಾಗಿದೆ 15/10/2024.,779.898,"('15/10/2024',)",True

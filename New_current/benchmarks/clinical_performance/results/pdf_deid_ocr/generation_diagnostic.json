@@ -1,0 +1,138 @@
+[
+  {
+    "difficulty": "Medium",
+    "filename": "PDF_Deid_Deidentification_Medium_0.pdf",
+    "rendered_dimensions": [
+      362,
+      512
+    ],
+    "processor_ms": 127.746,
+    "visual_input_shape": [
+      704,
+      1536
+    ],
+    "prompt_tokens": 258,
+    "generation_elapsed_s": 46.347,
+    "generated_tokens": 66,
+    "tokens_per_second": 1.424,
+    "eos_generated": false,
+    "reached_max_new_tokens": false,
+    "structured_json_completed": false,
+    "stop_events": [
+      [
+        9.07,
+        259
+      ],
+      [
+        11.526,
+        265
+      ],
+      [
+        14.153,
+        271
+      ],
+      [
+        17.7,
+        277
+      ],
+      [
+        21.342,
+        283
+      ],
+      [
+        23.753,
+        289
+      ],
+      [
+        28.837,
+        295
+      ],
+      [
+        31.345,
+        301
+      ],
+      [
+        35.189,
+        307
+      ],
+      [
+        38.798,
+        313
+      ],
+      [
+        41.184,
+        319
+      ]
+    ],
+    "output_prefix": "{\n  \"document_type\": \"printed_image\",\n  \"text\": \"Coordinator For Healthplans - Encounter Summary for Susan Frances Martin. Date Of Birth: 09/03/1951\\n\\nFNP-C\\n\\nSocial Security Number\\n103-15-0825\\n\\n",
+    "output_suffix": "{\n  \"document_type\": \"printed_image\",\n  \"text\": \"Coordinator For Healthplans - Encounter Summary for Susan Frances Martin. Date Of Birth: 09/03/1951\\n\\nFNP-C\\n\\nSocial Security Number\\n103-15-0825\\n\\n"
+  },
+  {
+    "difficulty": "Hard",
+    "filename": "PDF_Deid_Deidentification_Hard_0.pdf",
+    "rendered_dimensions": [
+      362,
+      512
+    ],
+    "processor_ms": 30.442,
+    "visual_input_shape": [
+      704,
+      1536
+    ],
+    "prompt_tokens": 258,
+    "generation_elapsed_s": 46.05,
+    "generated_tokens": 66,
+    "tokens_per_second": 1.433,
+    "eos_generated": false,
+    "reached_max_new_tokens": false,
+    "structured_json_completed": false,
+    "stop_events": [
+      [
+        4.036,
+        259
+      ],
+      [
+        8.674,
+        265
+      ],
+      [
+        14.343,
+        271
+      ],
+      [
+        18.368,
+        277
+      ],
+      [
+        20.956,
+        283
+      ],
+      [
+        25.93,
+        289
+      ],
+      [
+        29.823,
+        295
+      ],
+      [
+        32.237,
+        301
+      ],
+      [
+        37.451,
+        307
+      ],
+      [
+        40.021,
+        313
+      ],
+      [
+        42.859,
+        319
+      ]
+    ],
+    "output_prefix": "{\n  \"document_type\": \"scanned_pdf\",\n  \"text\": \"Apollo\\nHealth System\\nDIAGNOSTIC FORM DF-196\\nAPOLLO PATHOLOGY ASSOCIATES, INC\\n742 Main Avenue\\nToledo, OH 43615\\n(419",
+    "output_suffix": "{\n  \"document_type\": \"scanned_pdf\",\n  \"text\": \"Apollo\\nHealth System\\nDIAGNOSTIC FORM DF-196\\nAPOLLO PATHOLOGY ASSOCIATES, INC\\n742 Main Avenue\\nToledo, OH 43615\\n(419"
+  }
+]

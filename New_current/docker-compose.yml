@@ -1,0 +1,133 @@
+name: ib-health-medical-term-simplifier
+
+x-app-environment: &app-environment
+  INFRASTRUCTURE_ENABLED: "true"
+  DATABASE_URL: postgresql+asyncpg://ibhealth:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@postgres:5432/ibhealth
+  REDIS_URL: redis://:${REDIS_PASSWORD:?REDIS_PASSWORD is required}@redis:6379/0
+  CELERY_BROKER_URL: redis://:${REDIS_PASSWORD:?REDIS_PASSWORD is required}@redis:6379/1
+  CELERY_RESULT_BACKEND: redis://:${REDIS_PASSWORD:?REDIS_PASSWORD is required}@redis:6379/2
+  CACHE_ENCRYPTION_KEY: ${CACHE_ENCRYPTION_KEY:?CACHE_ENCRYPTION_KEY is required}
+  OCR_PROVIDER: qwen3-vl
+  POSTPROCESSOR_PROVIDER: symspell
+  OCR_CONFIG__PROVIDER_VERSION: ${OCR_CONFIG__PROVIDER_VERSION:?required}
+  OCR_CONFIG__LOCAL_FILES_ONLY: "true"
+  OCR_CONFIG__DEVICE: ${OCR_CONFIG__DEVICE:-auto}
+  OCR_CONFIG__ALLOW_CPU_FALLBACK: "true"
+  OCR_CONFIG__DTYPE: ${OCR_CONFIG__DTYPE:-float32}
+  OCR_CONFIG__BATCH_SIZE: ${OCR_CONFIG__BATCH_SIZE:-1}
+  OCR_CONFIG__MAX_IMAGE_SIZE: ${OCR_CONFIG__MAX_IMAGE_SIZE:-1600}
+  OCR_CONFIG__MAX_PAGES: ${OCR_CONFIG__MAX_PAGES:-50}
+  OCR_CONFIG__PDF_RENDER_DPI: ${OCR_CONFIG__PDF_RENDER_DPI:-144}
+  OCR_CONFIG__TIMEOUT_SECONDS: ${OCR_CONFIG__TIMEOUT_SECONDS:-300}
+  OCR_CONFIG__MAX_NEW_TOKENS: ${OCR_CONFIG__MAX_NEW_TOKENS:-2048}
+  OCR_CONFIG__DO_SAMPLE: "false"
+  OCR_CONFIG__TEMPERATURE: ${OCR_CONFIG__TEMPERATURE:-0.1}
+  OCR_CONFIG__TOP_P: ${OCR_CONFIG__TOP_P:-1.0}
+  OCR_CONFIG__NUM_BEAMS: ${OCR_CONFIG__NUM_BEAMS:-1}
+  OCR_CONFIG__PROMPT: ${OCR_CONFIG__PROMPT:?required}
+  OCR_CONFIG__PROMPT_VERSION: ${OCR_CONFIG__PROMPT_VERSION:?required}
+  OCR_CONFIG__CONFIDENCE_THRESHOLD: ${OCR_CONFIG__CONFIDENCE_THRESHOLD:-0.60}
+  OCR_CONFIG__CONFIDENCE_CALIBRATION_VERSION: ${OCR_CONFIG__CONFIDENCE_CALIBRATION_VERSION:?required}
+  OCR_CONFIG__SEED: ${OCR_CONFIG__SEED:-0}
+  POSTPROCESSOR_CONFIG__PROVIDER_VERSION: ${POSTPROCESSOR_CONFIG__PROVIDER_VERSION:?required}
+  POSTPROCESSOR_CONFIG__DICTIONARY_PATH: /run/ibhealth/postprocessing/symspell_frequency.txt
+  POSTPROCESSOR_CONFIG__DICTIONARY_VERSION: ${POSTPROCESSOR_CONFIG__DICTIONARY_VERSION:?required}
+  POSTPROCESSOR_CONFIG__ABBREVIATION_DICTIONARY_PATH: /run/ibhealth/postprocessing/medical_abbreviations.json
+  POSTPROCESSOR_CONFIG__ABBREVIATION_DICTIONARY_VERSION: ${POSTPROCESSOR_CONFIG__ABBREVIATION_DICTIONARY_VERSION:?required}
+  POSTPROCESSOR_CONFIG__PROTECTED_TERMS_PATH: /run/ibhealth/postprocessing/protected_medical_terms.json
+  POSTPROCESSOR_CONFIG__RULE_VERSION: ${POSTPROCESSOR_CONFIG__RULE_VERSION:?required}
+  POSTPROCESSOR_CONFIG__MAX_EDIT_DISTANCE: ${POSTPROCESSOR_CONFIG__MAX_EDIT_DISTANCE:-2}
+  POSTPROCESSOR_CONFIG__PREFIX_LENGTH: ${POSTPROCESSOR_CONFIG__PREFIX_LENGTH:-7}
+  POSTPROCESSOR_CONFIG__MIN_WORD_LENGTH: ${POSTPROCESSOR_CONFIG__MIN_WORD_LENGTH:-4}
+  POSTPROCESSOR_CONFIG__MIN_FREQUENCY: ${POSTPROCESSOR_CONFIG__MIN_FREQUENCY:-1}
+
+x-app-service: &app-service
+  build:
+    context: .
+  restart: unless-stopped
+  environment: *app-environment
+  volumes:
+    - ${MODEL_CACHE_PATH:-./.model-cache}:/app/.model-cache:ro
+    - ${POSTPROCESSOR_RESOURCES_PATH:?POSTPROCESSOR_RESOURCES_PATH is required}:/run/ibhealth/postprocessing:ro
+  depends_on:
+    postgres:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+
+services:
+  postgres:
+    image: postgres:16.4-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ibhealth
+      POSTGRES_USER: ibhealth
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ibhealth -d ibhealth"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  redis:
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--save", "60", "1", "--requirepass", "${REDIS_PASSWORD:?REDIS_PASSWORD is required}"]
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a $$REDIS_PASSWORD ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  migrate:
+    <<: *app-service
+    restart: "no"
+    command: ["alembic", "upgrade", "head"]
+
+  api:
+    <<: *app-service
+    ports:
+      - "8000:8000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health/live', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 90s
+
+  celery-worker:
+    <<: *app-service
+    command: ["celery", "-A", "app.infrastructure.celery_app:celery_app", "worker", "--loglevel=INFO", "--queues=ibhealth.cpu,ibhealth.gpu", "--concurrency=1"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  celery-beat:
+    <<: *app-service
+    command: ["celery", "-A", "app.infrastructure.celery_app:celery_app", "beat", "--loglevel=INFO"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:

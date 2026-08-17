@@ -1,0 +1,412 @@
+{
+  "schema_version": "ocr-validation-v1",
+  "model_manifest": {
+    "status": "PASS",
+    "evidence": "Every manifest model, immutable revision, provider configuration, and local snapshot was verified.",
+    "path": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\MODEL_MANIFEST.md",
+    "schema_version": "1",
+    "models": {
+      "qwen3-vl": {
+        "status": "PASS",
+        "provider": "qwen3-vl",
+        "repository_id": "Qwen/Qwen3-VL-4B-Instruct",
+        "pinned_revision": "ebb281ec70b05090aa6165b016eac8ec08e71b17",
+        "license": "Apache-2.0",
+        "expected_sha256": "PENDING_APPROVAL",
+        "observed_sha256": null,
+        "checksum_status": "NOT PROVIDED",
+        "cache_path": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\New_current\\.model-cache\\qwen3-vl",
+        "revision_available": true,
+        "provider_configuration_matches": true
+      }
+    }
+  },
+  "runtime": {
+    "timestamp": "2026-08-08T19:13:39.583609+00:00",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.13 (main, Mar  3 2026, 15:01:35) [MSC v.1944 64 bit (AMD64)]",
+    "torch": "2.13.0+cpu",
+    "transformers": "4.57.6",
+    "cuda_available_to_torch": false,
+    "cuda_device_count": 0,
+    "physical_gpu": [
+      "NVIDIA GeForce RTX 5050 Laptop GPU, 8151 MiB, 592.27"
+    ],
+    "cached_qwen3_vl_candidates": [
+      "models--Qwen--Qwen3-VL-4B-Instruct"
+    ],
+    "provider_environment_present": {
+      "ocr": true,
+      "postprocessor": false
+    }
+  },
+  "requirements": [
+    {
+      "requirement": "Model manifest verification",
+      "status": "PASS",
+      "evidence": "Every manifest model, immutable revision, provider configuration, and local snapshot was verified."
+    },
+    {
+      "requirement": "Qwen3-VL loads correctly",
+      "status": "FAIL",
+      "evidence": "The PDF exceeds the configured 1-page limit."
+    },
+    {
+      "requirement": "OCR runs on CPU",
+      "status": "FAIL",
+      "evidence": "The PDF exceeds the configured 1-page limit."
+    },
+    {
+      "requirement": "OCR runs on CUDA (if available)",
+      "status": "NOT VERIFIED",
+      "evidence": "did not run"
+    },
+    {
+      "requirement": "PDF",
+      "status": "NOT VERIFIED",
+      "evidence": "Decoder PASS; live Qwen3-VL The PDF exceeds the configured 1-page limit."
+    },
+    {
+      "requirement": "Multi-page PDF",
+      "status": "NOT VERIFIED",
+      "evidence": "Decoder PASS; live Qwen3-VL The PDF exceeds the configured 1-page limit."
+    },
+    {
+      "requirement": "PNG",
+      "status": "NOT VERIFIED",
+      "evidence": "Decoder PASS; live Qwen3-VL The PDF exceeds the configured 1-page limit."
+    },
+    {
+      "requirement": "JPEG",
+      "status": "NOT VERIFIED",
+      "evidence": "Decoder PASS; live Qwen3-VL The PDF exceeds the configured 1-page limit."
+    },
+    {
+      "requirement": "TIFF",
+      "status": "NOT VERIFIED",
+      "evidence": "Decoder PASS; live Qwen3-VL The PDF exceeds the configured 1-page limit."
+    },
+    {
+      "requirement": "Confidence generation",
+      "status": "NOT VERIFIED",
+      "evidence": "No live model confidence values were produced."
+    },
+    {
+      "requirement": "Processing time",
+      "status": "NOT VERIFIED",
+      "evidence": "No live model inference timings were produced."
+    },
+    {
+      "requirement": "OCR postprocessing",
+      "status": "PASS",
+      "evidence": "Synthetic pipeline completed with 13 corrections in 1.715 ms."
+    },
+    {
+      "requirement": "Structured logging",
+      "status": "PASS",
+      "evidence": "Captured 3 provider records with structured lifecycle/stage fields."
+    }
+  ],
+  "format_decoding": {
+    "pdf": {
+      "status": "PASS",
+      "page_count": 1,
+      "page_order": [
+        1
+      ]
+    },
+    "multi_page_pdf": {
+      "status": "PASS",
+      "page_count": 2,
+      "page_order": [
+        1,
+        2
+      ]
+    },
+    "png": {
+      "status": "PASS",
+      "page_count": 1,
+      "page_order": [
+        1
+      ]
+    },
+    "jpeg": {
+      "status": "PASS",
+      "page_count": 1,
+      "page_order": [
+        1
+      ]
+    },
+    "tiff": {
+      "status": "PASS",
+      "page_count": 2,
+      "page_order": [
+        1,
+        2
+      ]
+    }
+  },
+  "benchmarks": {
+    "ocr": {
+      "cpu": {
+        "status": "FAIL",
+        "device": "cpu",
+        "error": "The PDF exceeds the configured 1-page limit."
+      }
+    },
+    "postprocessor": {
+      "status": "PASS",
+      "configuration_source": "synthetic_benchmark_fixture",
+      "initialization_time_ms": 19.651,
+      "processing_time_ms": 1.715,
+      "total_corrections": 13,
+      "stages": [
+        {
+          "stage": "regex",
+          "latency_ms": 1.452,
+          "corrections": 11,
+          "configuration": {
+            "rule_version": "synthetic-benchmark-v1"
+          }
+        },
+        {
+          "stage": "medical_abbreviation_dictionary",
+          "latency_ms": 0.024,
+          "corrections": 1,
+          "configuration": {
+            "dictionary_path": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\New_current\\tests\\ocr\\fixtures\\medical_abbreviations.json",
+            "dictionary_version": "synthetic-benchmark-v1",
+            "entry_count": 2
+          }
+        },
+        {
+          "stage": "symspell",
+          "latency_ms": 0.177,
+          "corrections": 1,
+          "configuration": {
+            "dictionary_path": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\New_current\\tests\\ocr\\fixtures\\symspell_frequency.txt",
+            "dictionary_version": "synthetic-benchmark-v1",
+            "dictionary_terms": 10,
+            "max_edit_distance": 2,
+            "prefix_length": 7,
+            "min_word_length": 4,
+            "min_frequency": 1
+          }
+        }
+      ],
+      "normalized_output": "blood pressure (BP) 120 / 80 hemoglobin 6.5% Metformin"
+    }
+  },
+  "confidence_distribution": {
+    "count": 0,
+    "min": null,
+    "max": null,
+    "mean": null,
+    "values": []
+  },
+  "error_examples": [
+    {
+      "category": "regex",
+      "before": "BP 120 / 80  haemoglobn 6 . 5 % Metformin",
+      "after": "BP 120 / 80 haemoglobn 6.5% Metformin",
+      "corrections": 11,
+      "latency_ms": 0.047
+    },
+    {
+      "category": "medical_abbreviation_dictionary",
+      "before": "BP 120 / 80 haemoglobn 6.5% Metformin",
+      "after": "blood pressure (BP) 120 / 80 haemoglobn 6.5% Metformin",
+      "corrections": 1,
+      "latency_ms": 0.022
+    },
+    {
+      "category": "symspell",
+      "before": "blood pressure (BP) 120 / 80 haemoglobn 6.5% Metformin",
+      "after": "blood pressure (BP) 120 / 80 hemoglobin 6.5% Metformin",
+      "corrections": 1,
+      "latency_ms": 0.147
+    },
+    {
+      "category": "ocr_output_without_ground_truth",
+      "document": "pdf",
+      "status": "NOT VERIFIED",
+      "reason": "No approved ground-truth corpus was supplied; OCR mistakes cannot be scored."
+    }
+  ],
+  "structured_logs": [
+    {
+      "timestamp": "2026-08-08T19:06:29.745132+00:00",
+      "level": "INFO",
+      "logger": "app.ocr.providers.registry",
+      "message": "OCR provider registered",
+      "event": "provider_registered",
+      "provider_kind": "ocr",
+      "provider_name": "qwen3-vl"
+    },
+    {
+      "timestamp": "2026-08-08T19:06:29.745132+00:00",
+      "level": "INFO",
+      "logger": "app.ocr.providers.registry",
+      "message": "OCR provider registered",
+      "event": "provider_registered",
+      "provider_kind": "postprocessor",
+      "provider_name": "symspell"
+    },
+    {
+      "timestamp": "2026-08-08T19:06:29.882977+00:00",
+      "level": "INFO",
+      "logger": "app.ocr.providers.implementations",
+      "message": "OCR provider initialization started",
+      "event": "provider_initializing",
+      "provider_kind": "postprocessor",
+      "provider_name": "symspell",
+      "provider_version": "benchmark-fixture-v1"
+    },
+    {
+      "timestamp": "2026-08-08T19:06:29.895853+00:00",
+      "level": "INFO",
+      "logger": "app.ocr.providers.implementations",
+      "message": "OCR provider initialized",
+      "event": "provider_initialized",
+      "provider_kind": "postprocessor",
+      "provider_name": "symspell",
+      "provider_version": "benchmark-fixture-v1",
+      "model_loading_time_ms": 12.662,
+      "resolved_device": "cpu",
+      "cpu_fallback": false,
+      "gpu_name": null
+    },
+    {
+      "timestamp": "2026-08-08T19:06:29.898876+00:00",
+      "level": "INFO",
+      "logger": "app.ocr.providers.implementations",
+      "message": "Medical OCR post-processing completed",
+      "event": "postprocessing_completed",
+      "provider_kind": "postprocessor",
+      "provider_name": "symspell",
+      "provider_version": "benchmark-fixture-v1",
+      "processing_time_ms": 1.715,
+      "corrections": 13,
+      "document_type": "printed_image",
+      "rule_version": "synthetic-benchmark-v1"
+    },
+    {
+      "timestamp": "2026-08-08T19:06:29.901864+00:00",
+      "level": "INFO",
+      "logger": "app.ocr.providers.implementations",
+      "message": "OCR provider shut down",
+      "event": "provider_stopped",
+      "provider_kind": "postprocessor",
+      "provider_name": "symspell",
+      "provider_version": "benchmark-fixture-v1"
+    },
+    {
+      "timestamp": "2026-08-08T19:06:29.910357+00:00",
+      "level": "INFO",
+      "logger": "app.ocr.providers.implementations",
+      "message": "OCR provider initialization started",
+      "event": "provider_initializing",
+      "provider_kind": "ocr",
+      "provider_name": "qwen3-vl",
+      "provider_version": "contract-1.0.0"
+    },
+    {
+      "timestamp": "2026-08-08T19:06:48.732053+00:00",
+      "level": "INFO",
+      "logger": "app.ocr.providers.implementations",
+      "message": "OCR provider initialized",
+      "event": "provider_initialized",
+      "provider_kind": "ocr",
+      "provider_name": "qwen3-vl",
+      "provider_version": "contract-1.0.0",
+      "model_loading_time_ms": 18821.576,
+      "resolved_device": "cpu",
+      "cpu_fallback": false,
+      "gpu_name": null
+    },
+    {
+      "timestamp": "2026-08-08T19:10:21.939531+00:00",
+      "level": "INFO",
+      "logger": "app.ocr.providers.implementations",
+      "message": "Qwen3-VL OCR completed",
+      "event": "ocr_completed",
+      "provider_kind": "ocr",
+      "provider_name": "qwen3-vl",
+      "provider_version": "contract-1.0.0",
+      "inference_latency_ms": 213205.566,
+      "page_count": 1,
+      "pages_per_second": 0.005,
+      "confidence": 0.9927136243843451,
+      "confidence_method": "mean_generated_token_probability",
+      "resolved_device": "cpu",
+      "gpu_memory_allocated_mb": null,
+      "gpu_peak_memory_mb": null,
+      "cpu_fallback": false
+    },
+    {
+      "timestamp": "2026-08-08T19:13:33.964159+00:00",
+      "level": "INFO",
+      "logger": "app.ocr.providers.implementations",
+      "message": "Qwen3-VL OCR completed",
+      "event": "ocr_completed",
+      "provider_kind": "ocr",
+      "provider_name": "qwen3-vl",
+      "provider_version": "contract-1.0.0",
+      "inference_latency_ms": 192023.705,
+      "page_count": 1,
+      "pages_per_second": 0.005,
+      "confidence": 0.9927136243843451,
+      "confidence_method": "mean_generated_token_probability",
+      "resolved_device": "cpu",
+      "gpu_memory_allocated_mb": null,
+      "gpu_peak_memory_mb": null,
+      "cpu_fallback": false
+    },
+    {
+      "timestamp": "2026-08-08T19:13:34.019417+00:00",
+      "level": "INFO",
+      "logger": "app.ocr.providers.implementations",
+      "message": "Native digital PDF text extraction completed",
+      "event": "digital_pdf_extraction_completed",
+      "provider_kind": "ocr",
+      "provider_name": "qwen3-vl",
+      "provider_version": "contract-1.0.0",
+      "inference_latency_ms": 53.393,
+      "page_count": 1,
+      "pages_per_second": 18.729,
+      "resolved_device": "cpu"
+    },
+    {
+      "timestamp": "2026-08-08T19:13:39.573973+00:00",
+      "level": "INFO",
+      "logger": "app.ocr.providers.implementations",
+      "message": "OCR provider shut down",
+      "event": "provider_stopped",
+      "provider_kind": "ocr",
+      "provider_name": "qwen3-vl",
+      "provider_version": "contract-1.0.0"
+    }
+  ],
+  "screenshots": {
+    "dashboard": {
+      "status": "PASS",
+      "path": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\New_current\\benchmarks\\ocr\\reports\\screenshots\\developer-dashboard.png",
+      "evidence": "The existing developer page rendered on the screenshot-only server."
+    },
+    "swagger": {
+      "status": "PASS",
+      "path": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\New_current\\benchmarks\\ocr\\reports\\screenshots\\swagger.png",
+      "evidence": "Swagger rendered and exposed GET /api/v1/ocr/health."
+    },
+    "health": {
+      "status": "NOT VERIFIED",
+      "path": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\New_current\\benchmarks\\ocr\\reports\\screenshots\\health-endpoint-503.png",
+      "evidence": "The actual health operation returned 503 because providers were not initialized."
+    },
+    "ocr_output": {
+      "status": "NOT VERIFIED",
+      "path": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\New_current\\benchmarks\\ocr\\reports\\screenshots\\ocr-output-not-verified.png",
+      "evidence": "A synthetic upload produced no OCR output because the runtime was not ready."
+    }
+  }
+}

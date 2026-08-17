@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="ocr-owner-id" content="{{ owner_id }}" />
+    <title>IB Health OCR Engineering Console</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link href="/static/ocr_console.css" rel="stylesheet" />
+  </head>
+  <body class="bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+      <div class="container-fluid px-4">
+        <span class="navbar-brand">IB Health OCR Engineering Console</span>
+        <div class="d-flex gap-2 align-items-center">
+          <span class="badge text-bg-secondary">{{ pipeline_version }}</span>
+          <a class="btn btn-sm btn-outline-light" href="/docs" target="_blank">Open Swagger</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container-fluid py-4 px-4">
+      <div id="alert-region" aria-live="polite"></div>
+      <div class="row g-4">
+        <section class="col-xl-5">
+          <div class="card shadow-sm h-100">
+            <div class="card-header"><strong>Upload and preview</strong></div>
+            <div class="card-body">
+              <form id="ocr-form">
+                <label id="drop-zone" class="drop-zone w-100" for="document-file">
+                  <span class="fs-5">Drag and drop a de-identified document</span>
+                  <span class="text-secondary">PDF, PNG, JPEG, TIFF, BMP, WebP, HEIC</span>
+                  <input
+                    id="document-file"
+                    class="form-control mt-3"
+                    type="file"
+                    accept=".pdf,.png,.jpg,.jpeg,.tif,.tiff,.bmp,.webp,.heic,.heif"
+                    required
+                  />
+                </label>
+                <button id="run-button" class="btn btn-primary mt-3" type="submit">
+                  Run OCR
+                </button>
+              </form>
+              <div id="preview-empty" class="text-secondary mt-4">No document selected.</div>
+              <iframe id="pdf-preview" class="preview mt-4 d-none" title="PDF preview"></iframe>
+              <img id="image-preview" class="preview mt-4 d-none" alt="Document preview" />
+            </div>
+          </div>
+        </section>
+
+        <section class="col-xl-7">
+          <div class="card shadow-sm h-100">
+            <div class="card-header d-flex justify-content-between">
+              <strong>Pipeline status</strong>
+              <span id="pipeline-status" class="badge text-bg-secondary">Idle</span>
+            </div>
+            <div class="card-body">
+              <div class="progress mb-4" role="progressbar" aria-label="OCR progress">
+                <div id="pipeline-progress" class="progress-bar" style="width: 0%">0%</div>
+              </div>
+              <div class="row g-3 metrics">
+                <div class="col-md-4"><span>Document type</span><strong id="document-type">—</strong></div>
+                <div class="col-md-4"><span>Confidence</span><strong id="confidence">—</strong></div>
+                <div class="col-md-4"><span>Processing time</span><strong id="processing-time">—</strong></div>
+                <div class="col-md-4"><span>Pages</span><strong id="page-count">—</strong></div>
+                <div class="col-md-4"><span>Cache</span><strong id="cache-status">—</strong></div>
+                <div class="col-md-4"><span>Request ID</span><strong id="request-id">—</strong></div>
+              </div>
+              <div id="warnings" class="alert alert-warning mt-4 d-none"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="col-lg-6">
+          <div class="card shadow-sm">
+            <div class="card-header"><strong>OCR output</strong></div>
+            <div class="card-body"><pre id="raw-output" class="output-pane">No result.</pre></div>
+          </div>
+        </section>
+        <section class="col-lg-6">
+          <div class="card shadow-sm">
+            <div class="card-header"><strong>Normalized output</strong></div>
+            <div class="card-body"><pre id="normalized-output" class="output-pane">No result.</pre></div>
+          </div>
+        </section>
+
+        <section class="col-lg-6">
+          <div class="card shadow-sm">
+            <div class="card-header"><strong>Provider information</strong></div>
+            <div class="card-body table-responsive">
+              <table class="table table-sm align-middle">
+                <thead><tr><th>Stage</th><th>Provider</th><th>Version</th><th>Model revision</th></tr></thead>
+                <tbody id="provider-table"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <section class="col-lg-6">
+          <div class="card shadow-sm">
+            <div class="card-header"><strong>Health status</strong></div>
+            <div class="card-body" id="health-panel">Loading…</div>
+          </div>
+        </section>
+
+        <section class="col-12">
+          <div class="card shadow-sm">
+            <div class="card-header"><strong>Recent OCR requests</strong></div>
+            <div class="card-body table-responsive">
+              <table class="table table-hover table-sm">
+                <thead><tr><th>Request</th><th>Status</th><th>Stage</th><th>Progress</th><th>Updated</th></tr></thead>
+                <tbody id="recent-table"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="col-12">
+          <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between">
+              <strong>Structured logs</strong>
+              <button id="refresh-button" class="btn btn-sm btn-outline-secondary" type="button">Refresh</button>
+            </div>
+            <div class="card-body"><pre id="logs-viewer" class="log-pane">Loading…</pre></div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <script src="/static/ocr_console.js" defer></script>
+  </body>
+</html>

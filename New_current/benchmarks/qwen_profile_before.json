@@ -1,0 +1,19 @@
+{
+  "mode": "baseline",
+  "device": "cpu",
+  "dtype": "torch.bfloat16",
+  "attention": "sdpa",
+  "prompt_construction_ms": 0.606,
+  "tokenizer_ms": 14.037,
+  "generation_ms": 40692.8,
+  "post_processing_ms": 3.98,
+  "prompt_tokens": 636,
+  "output_tokens": 8,
+  "generation_tokens_per_second": 0.197,
+  "cpu_utilization_percent": 29.7,
+  "sampled_cpu_utilization_percent": 29.7,
+  "gpu_utilization_percent": null,
+  "peak_ram_mb": 1601.1,
+  "peak_vram_allocated_mb": 0.0,
+  "peak_vram_reserved_mb": 0.0
+}

@@ -1,0 +1,2 @@
+filename,difficulty,contract,total_latency_ms,generation_latency_ms,generated_tokens,tokens_per_second,phi_recovery,status
+NOT_VERIFIED,medium,structured_json,NOT_VERIFIED,NOT_VERIFIED,NOT_VERIFIED,NOT_VERIFIED,NOT_VERIFIED,no_completed_sequence

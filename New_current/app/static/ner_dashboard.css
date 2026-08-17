@@ -1,0 +1,26 @@
+.text-pane,
+.json-pane {
+  min-height: 12rem;
+  max-height: 30rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.entity-highlight {
+  border-radius: 0.25rem;
+  background: #ffe69c;
+  padding: 0.05rem 0.15rem;
+}
+
+.metric-card {
+  border-left: 0.25rem solid #0d6efd;
+  background: #f8f9fa;
+  padding: 0.75rem;
+}
+
+.metric-card span {
+  display: block;
+  color: #6c757d;
+  font-size: 0.8rem;
+}

@@ -1,0 +1,10 @@
+transformers
+sentence-transformers
+torch
+psutil
+pandas
+numpy
+matplotlib
+textstat
+scikit-learn
+tqdm

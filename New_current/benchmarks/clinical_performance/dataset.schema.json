@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IB Health De-identified Clinical Performance Benchmark Record",
+  "type": "object",
+  "required": ["document_id", "category", "document_path"],
+  "properties": {
+    "document_id": {"type": "string", "minLength": 1},
+    "category": {
+      "type": "string",
+      "enum": ["lab_report", "prescription", "discharge_summary", "radiology_report", "consultation_note", "handwritten_scanned_report", "table_heavy_report", "small_text_report", "multi_page_report"]
+    },
+    "document_path": {"type": "string", "minLength": 1},
+    "ocr_gold_text": {"type": ["string", "null"]},
+    "simplification_source_text": {"type": ["string", "null"]},
+    "notes": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

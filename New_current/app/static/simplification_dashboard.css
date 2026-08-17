@@ -1,0 +1,7 @@
+body { background: #f4f7fb; color: #17233b; }
+.card { border: 0; }
+.output { background: #111827; color: #dbeafe; border-radius: .5rem; padding: 1rem; max-height: 28rem; overflow: auto; white-space: pre-wrap; }
+.metric { background: #fff; border-left: .25rem solid #0d6efd; border-radius: .5rem; padding: 1rem; height: 100%; }
+.metric span { color: #64748b; display: block; font-size: .8rem; text-transform: uppercase; }
+.metric strong { display: block; overflow-wrap: anywhere; }
+.level-output { white-space: pre-wrap; }

@@ -1,0 +1,7 @@
+body { color: #17253b; }
+.health-card { min-height: 130px; border: 0; }
+.status-dot { width: .7rem; height: .7rem; border-radius: 50%; display: inline-block; }
+.status-healthy { background: #198754; }
+.status-unhealthy, .status-not_configured { background: #dc3545; }
+.metric-value { font-size: 1.5rem; font-weight: 650; }
+code { color: #5b2a86; }

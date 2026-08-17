@@ -1,0 +1,32 @@
+{
+  "category_counts": {},
+  "comparisons": [
+    {
+      "candidate": "ocr_512px",
+      "recommendation": "MORE_VALIDATION_REQUIRED"
+    },
+    {
+      "candidate": "fp16",
+      "recommendation": "MORE_VALIDATION_REQUIRED"
+    },
+    {
+      "candidate": "int8",
+      "recommendation": "MORE_VALIDATION_REQUIRED"
+    },
+    {
+      "candidate": "4bit",
+      "recommendation": "MORE_VALIDATION_REQUIRED"
+    },
+    {
+      "candidate": "compact_simplification_schema",
+      "recommendation": "MORE_VALIDATION_REQUIRED"
+    },
+    {
+      "candidate": "future_model_replacement",
+      "recommendation": "MORE_VALIDATION_REQUIRED"
+    }
+  ],
+  "dataset": "benchmarks\\clinical_performance\\dataset.jsonl",
+  "document_count": 0,
+  "status": "READY_FOR_APPROVED_RUN_ARTIFACTS"
+}

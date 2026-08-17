@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IB Health Pipeline Test Console</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/engineering_demo.css" rel="stylesheet">
+</head>
+<body>
+  <main class="container-fluid py-4 px-3 px-lg-4" data-dashboard-version="{{ dashboard_version }}">
+    <header class="demo-header p-4 p-lg-5 mb-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+        <div>
+          <p class="eyebrow mb-2">IB Health &middot; Internal Engineering Demonstration</p>
+          <h1 class="display-6 fw-semibold mb-2">Pipeline Test Console</h1>
+          <p class="mb-0 text-secondary">
+            Not the patient-facing product. This console calls the real backend APIs directly
+            so engineers and management can independently verify what is currently working.
+          </p>
+        </div>
+        <a class="btn btn-dark" href="/docs" target="_blank" rel="noopener">Open Swagger</a>
+      </div>
+      <div class="status-legend d-flex flex-wrap gap-2 mt-4" aria-label="Module status legend">
+        <span class="status status-ready">Production Ready</span>
+        <span class="status status-architecture">Architecture Complete</span>
+        <span class="status status-pending">Runtime Pending</span>
+        <span class="status status-planned">Planned</span>
+        <span class="status status-frozen">Frozen</span>
+      </div>
+      <div class="mode-toggle btn-group mt-4" role="group" aria-label="Console mode">
+        <button id="mode-step" type="button" class="btn btn-primary active" aria-pressed="true">Step-by-Step Mode</button>
+        <button id="mode-full" type="button" class="btn btn-outline-primary" aria-pressed="false">Full Pipeline Mode</button>
+      </div>
+    </header>
+
+    <div id="demo-alert" class="alert d-none" role="alert"></div>
+
+    <section class="card stage-card mb-4" id="overview-section">
+      <div class="card-body p-4">
+        <h2 class="h5 mb-3">Pipeline Overview</h2>
+        <div class="overview-flow" id="overview-flow">
+          <div class="overview-node" data-stage="ocr"><span class="overview-label">OCR</span><span id="overview-ocr" class="status status-loading">Waiting</span></div>
+          <span class="overview-arrow">&rarr;</span>
+          <div class="overview-node" data-stage="ner"><span class="overview-label">NER</span><span id="overview-ner" class="status status-loading">Waiting</span></div>
+          <span class="overview-arrow">&rarr;</span>
+          <div class="overview-node" data-stage="simplification"><span class="overview-label">Simplification</span><span id="overview-simplification" class="status status-loading">Waiting</span></div>
+          <span class="overview-arrow">&rarr;</span>
+          <div class="overview-node" data-stage="verification"><span class="overview-label">Verification</span><span id="overview-verification" class="status status-loading">Waiting</span></div>
+          <span class="overview-arrow">&rarr;</span>
+          <div class="overview-node" data-stage="translation"><span class="overview-label">Translation</span><span id="overview-translation" class="status status-loading">Waiting</span></div>
+        </div>
+        <div class="row g-3 mt-1">
+          <div class="col-md-3 col-sm-6">
+            <div class="future-tile"><strong>Embeddings</strong><span id="overview-embeddings" class="status status-loading">Non-blocking</span></div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="future-tile"><strong>Entity Linking</strong><span id="overview-linking" class="status status-pending">Runtime Pending</span></div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="future-tile"><strong>Relation Extraction</strong><span id="overview-relation" class="status status-pending">Runtime Pending</span></div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="future-tile"><strong>TTS</strong><span class="status status-frozen">Frozen</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card stage-card mb-4" id="full-pipeline-section" hidden>
+      <div class="card-body p-4">
+        <div class="stage-heading"><span class="stage-number">&#9654;</span><div><h2>Full Pipeline Mode</h2><p>Runs every functional stage in dependency order against the real APIs. Embeddings run in the background and do not block simplification.</p></div></div>
+        <form id="full-pipeline-form" class="row g-3 align-items-end mb-4">
+          <div class="col-lg-6"><label for="full-report-file" class="form-label">Clinical document</label><input id="full-report-file" class="form-control" type="file" accept=".pdf,.png,.jpg,.jpeg,.tif,.tiff,.bmp,.webp,.heic,.heif" required></div>
+          <div class="col-lg-3"><label for="full-target-language" class="form-label">Translation target</label><select id="full-target-language" class="form-select"></select></div>
+          <div class="col-lg-3 d-grid"><button id="run-full-pipeline" class="btn btn-primary" type="submit">Run Complete Pipeline</button></div>
+        </form>
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <h3 class="h6">Progress</h3>
+            <ul class="progress-tracker" id="progress-tracker">
+              <li data-stage="ocr"><span class="tracker-label">OCR</span><span class="status status-loading tracker-status">WAITING</span></li>
+              <li data-stage="ner"><span class="tracker-label">NER</span><span class="status status-loading tracker-status">WAITING</span></li>
+              <li data-stage="simplification"><span class="tracker-label">Simplification</span><span class="status status-loading tracker-status">WAITING</span></li>
+              <li data-stage="verification"><span class="tracker-label">Verification</span><span class="status status-loading tracker-status">WAITING</span></li>
+              <li data-stage="translation"><span class="tracker-label">Translation</span><span class="status status-loading tracker-status">WAITING</span></li>
+            </ul>
+          </div>
+          <div class="col-lg-8">
+            <h3 class="h6">Run summary</h3>
+            <div class="metadata-grid">
+              <div><span>Total elapsed</span><strong id="full-total-elapsed">&mdash;</strong></div>
+              <div><span>Time to first result</span><strong id="full-first-result">&mdash;</strong></div>
+              <div><span>Stages completed</span><strong id="full-stage-count">0 / 5</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="row g-4">
+      <div class="col-12">
+        <section class="card stage-card" id="upload-section">
+          <div class="card-body p-4">
+            <div class="stage-heading"><span class="stage-number">1</span><div><h2>Document Input</h2><p>Upload one de-identified clinical document.</p></div></div>
+            <form id="pipeline-form" class="row g-3 align-items-end">
+              <div class="col-lg-9">
+                <label id="drop-zone" class="drop-zone w-100" for="report-file">
+                  <span class="fs-5">Drag and drop, or choose a file</span>
+                  <span class="text-secondary">PDF, PNG, JPEG, TIFF, BMP, WebP, HEIC</span>
+                  <input id="report-file" name="file" class="form-control mt-3" type="file" accept=".pdf,.png,.jpg,.jpeg,.tif,.tiff,.bmp,.webp,.heic,.heif" required>
+                </label>
+              </div>
+              <div class="col-lg-3 d-grid"><button id="run-ocr" class="btn btn-primary" type="submit">Run OCR</button></div>
+            </form>
+            <div class="row g-3 mt-1">
+              <div class="col-12">
+                <div id="preview-empty" class="text-secondary">No document selected.</div>
+                <iframe id="pdf-preview" class="preview d-none" title="Document preview"></iframe>
+                <img id="image-preview" class="preview d-none" alt="Document preview">
+              </div>
+              <div class="col-12">
+                <div class="metadata-grid">
+                  <div><span>Filename</span><strong id="doc-filename">&mdash;</strong></div>
+                  <div><span>MIME type</span><strong id="doc-mime">&mdash;</strong></div>
+                  <div><span>File size</span><strong id="doc-size">&mdash;</strong></div>
+                  <div><span>Page count</span><strong id="doc-pages">&mdash;</strong></div>
+                  <div><span>SHA-256 / document hash</span><strong id="doc-hash">NOT EXPOSED</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-12">
+        <section class="card stage-card" id="ocr-section">
+          <div class="card-body p-4">
+            <div class="stage-heading"><span class="stage-number">2</span><div><div class="d-flex flex-wrap gap-2 align-items-center"><h2>OCR</h2><span id="ocr-state" class="status status-loading">Waiting</span></div><p>Model: Qwen3-VL-4B-Instruct.</p></div></div>
+            <div class="metadata-grid mb-3">
+              <div><span>Provider</span><strong id="ocr-provider">&mdash;</strong></div>
+              <div><span>Repository</span><strong id="ocr-repo">&mdash;</strong></div>
+              <div><span>Pinned revision</span><strong id="ocr-revision">&mdash;</strong></div>
+              <div><span>Device</span><strong id="ocr-device">&mdash;</strong></div>
+              <div><span>Dtype</span><strong id="ocr-dtype">&mdash;</strong></div>
+              <div><span>Warm / Cold</span><strong id="ocr-warm">&mdash;</strong></div>
+              <div><span>Health</span><strong id="ocr-health">&mdash;</strong></div>
+              <div><span>Page count</span><strong id="ocr-page-count">&mdash;</strong></div>
+              <div><span>Document type</span><strong id="ocr-doc-type">&mdash;</strong></div>
+              <div><span>Confidence</span><strong id="ocr-confidence">&mdash;</strong></div>
+              <div><span>Confidence method</span><strong id="ocr-confidence-method">&mdash;</strong></div>
+              <div><span>Review required</span><strong id="ocr-review">&mdash;</strong></div>
+              <div><span>Cache</span><strong id="ocr-cache">&mdash;</strong></div>
+              <div><span>Latency</span><strong id="ocr-latency">&mdash;</strong></div>
+              <div><span>Request ID</span><strong id="ocr-request-id">&mdash;</strong></div>
+              <div><span>OCR ID</span><strong id="ocr-ocr-id">&mdash;</strong></div>
+              <div><span>Report ID</span><strong id="ocr-report-id">&mdash;</strong></div>
+              <div><span>Pipeline version</span><strong id="ocr-pipeline-version">&mdash;</strong></div>
+            </div>
+            <div id="ocr-warnings" class="alert alert-warning d-none"></div>
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item"><button class="nav-link active" data-tab-target="ocr-tab-normalized" type="button">Normalized Text</button></li>
+              <li class="nav-item"><button class="nav-link" data-tab-target="ocr-tab-raw" type="button">Raw Text</button></li>
+              <li class="nav-item"><button class="nav-link" data-tab-target="ocr-tab-json" type="button">JSON</button></li>
+              <li class="nav-item"><button class="nav-link" data-tab-target="ocr-tab-stats" type="button">Stats</button></li>
+            </ul>
+            <div class="tab-content border border-top-0 rounded-bottom p-3">
+              <div class="tab-pane show" id="ocr-tab-normalized"><textarea id="ocr-normalized" class="form-control output-text" rows="8" readonly placeholder="Run OCR to view normalized text."></textarea></div>
+              <div class="tab-pane" id="ocr-tab-raw"><textarea id="ocr-raw" class="form-control output-text" rows="8" readonly placeholder="Run OCR to view raw text."></textarea></div>
+              <div class="tab-pane" id="ocr-tab-json"><pre id="ocr-json" class="json-output">No response yet.</pre></div>
+              <div class="tab-pane" id="ocr-tab-stats"><pre id="ocr-stats" class="json-output">No response yet.</pre></div>
+            </div>
+            <button id="run-ner" class="btn btn-primary mt-3" type="button" disabled>Run NER</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-12">
+        <section class="card stage-card" id="ner-section">
+          <div class="card-body p-4">
+            <div class="stage-heading"><span class="stage-number">3</span><div><div class="d-flex flex-wrap gap-2 align-items-center"><h2>Medical NER</h2><span id="ner-state" class="status status-loading">Waiting</span></div><p>Model: d4data/biomedical-ner-all.</p></div></div>
+            <div class="metadata-grid mb-3">
+              <div><span>Health</span><strong id="ner-health">&mdash;</strong></div>
+              <div><span>Model</span><strong id="ner-model">&mdash;</strong></div>
+              <div><span>Pinned revision</span><strong id="ner-revision">&mdash;</strong></div>
+              <div><span>Device</span><strong id="ner-device">&mdash;</strong></div>
+              <div><span>Warm / Cold</span><strong id="ner-warm">&mdash;</strong></div>
+              <div><span>Latency</span><strong id="ner-latency">&mdash;</strong></div>
+              <div><span>Total entities</span><strong id="ner-count">&mdash;</strong></div>
+              <div><span>Mean confidence (API)</span><strong id="ner-confidence">&mdash;</strong></div>
+              <div><span>Min / Max confidence</span><strong id="ner-minmax">&mdash;</strong></div>
+              <div><span>Token count</span><strong id="ner-tokens">&mdash;</strong></div>
+              <div><span>Tokens / second</span><strong id="ner-tps">&mdash;</strong></div>
+              <div><span>Review required</span><strong id="ner-review">&mdash;</strong></div>
+              <div><span>Cache</span><strong id="ner-cache">&mdash;</strong></div>
+            </div>
+            <div id="ner-label-counts" class="entity-chips mb-3"><span class="text-secondary">Run NER to view entity counts by label.</span></div>
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item"><button class="nav-link active" data-tab-target="ner-tab-entities" type="button">Entities</button></li>
+              <li class="nav-item"><button class="nav-link" data-tab-target="ner-tab-highlighted" type="button">Highlighted Text</button></li>
+              <li class="nav-item"><button class="nav-link" data-tab-target="ner-tab-json" type="button">JSON</button></li>
+              <li class="nav-item"><button class="nav-link" data-tab-target="ner-tab-stats" type="button">Stats</button></li>
+            </ul>
+            <div class="tab-content border border-top-0 rounded-bottom p-3">
+              <div class="tab-pane show" id="ner-tab-entities"><div class="table-responsive"><table class="table table-sm align-middle"><thead><tr><th>Text</th><th>Label</th><th>Start</th><th>End</th><th>Confidence</th></tr></thead><tbody id="entity-table"><tr><td colspan="5" class="text-secondary">No entities yet.</td></tr></tbody></table></div></div>
+              <div class="tab-pane" id="ner-tab-highlighted"><div id="highlighted-text" class="output-text p-3 border rounded">Run NER to view highlighted text.</div></div>
+              <div class="tab-pane" id="ner-tab-json"><pre id="ner-json" class="json-output">No response yet.</pre></div>
+              <div class="tab-pane" id="ner-tab-stats"><pre id="ner-stats" class="json-output">No response yet.</pre></div>
+            </div>
+            <button id="run-simplification" class="btn btn-primary mt-3" type="button" disabled>Run Simplification</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-lg-6">
+        <section class="card stage-card h-100" id="entity-linking-section">
+          <div class="card-body p-4">
+            <div class="stage-heading"><span class="stage-number">&mdash;</span><div><h2>Entity Linking</h2><p>Canonical UMLS concept linking.</p></div></div>
+            <span class="status status-pending">Runtime Pending</span>
+            <dl class="stage-facts mt-3"><dt>Health</dt><dd id="linking-health">Checking&hellip;</dd><dt>Detail</dt><dd id="linking-detail">Awaiting provider response.</dd></dl>
+          </div>
+        </section>
+      </div>
+      <div class="col-lg-6">
+        <section class="card stage-card h-100" id="relation-section">
+          <div class="card-body p-4">
+            <div class="stage-heading"><span class="stage-number">&mdash;</span><div><h2>Relation Extraction</h2><p>Directed clinical relationships between entities.</p></div></div>
+            <span class="status status-pending">Runtime Pending</span>
+            <dl class="stage-facts mt-3"><dt>Health</dt><dd id="relation-health">Checking&hellip;</dd><dt>Detail</dt><dd id="relation-detail">BioLinkBERT-base is a backbone, not a task-specific relation classifier.</dd></dl>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-12">
+        <section class="card stage-card" id="embeddings-section">
+          <div class="card-body p-4">
+            <div class="stage-heading"><span class="stage-number">Opt</span><div><div class="d-flex flex-wrap gap-2 align-items-center"><h2>Medical Embeddings</h2><span id="embedding-state" class="status status-loading">Checking</span><span class="status status-architecture">Non-blocking</span></div><p>BioClinical ModernBERT vectors, returned directly without vector storage. Independently testable; never gates simplification.</p></div></div>
+            <div class="metadata-grid mb-3">
+              <div><span>Model</span><strong id="embedding-model">&mdash;</strong></div>
+              <div><span>Revision</span><strong id="embedding-revision">&mdash;</strong></div>
+              <div><span>Health</span><strong id="embedding-health">&mdash;</strong></div>
+              <div><span>Device</span><strong id="embedding-device">&mdash;</strong></div>
+              <div><span>Warm / Cold</span><strong id="embedding-warm">&mdash;</strong></div>
+              <div><span>Dimensions</span><strong id="embedding-dimension">&mdash;</strong></div>
+              <div><span>Pooling</span><strong id="embedding-pooling">&mdash;</strong></div>
+              <div><span>Normalized</span><strong id="embedding-normalized">&mdash;</strong></div>
+              <div><span>Vector norm</span><strong id="embedding-norm">&mdash;</strong></div>
+              <div><span>Token count</span><strong id="embedding-tokens">&mdash;</strong></div>
+              <div><span>Latency</span><strong id="embedding-latency">&mdash;</strong></div>
+              <div><span>Throughput</span><strong id="embedding-throughput">&mdash;</strong></div>
+            </div>
+            <button id="run-embeddings" class="btn btn-outline-primary mb-3" type="button" disabled>Run Embeddings</button>
+            <label class="form-label fw-semibold">Vector preview (first 12 values)</label>
+            <pre id="embedding-preview" class="json-output compact">Run OCR, then Run Embeddings, to preview a vector.</pre>
+            <button id="embedding-full-json-toggle" class="btn btn-sm btn-outline-secondary" type="button">Show Full JSON</button>
+            <pre id="embedding-full-json" class="json-output d-none">No response yet.</pre>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-12">
+        <section class="card stage-card" id="simplification-section">
+          <div class="card-body p-4">
+            <div class="stage-heading"><span class="stage-number">4</span><div><div class="d-flex flex-wrap gap-2 align-items-center"><h2>Qwen Simplification</h2><span id="simplification-state" class="status status-loading">Waiting</span></div><p>Model: Qwen3-0.6B. One inference call generates all three levels.</p></div></div>
+            <div class="metadata-grid mb-3">
+              <div><span>Health</span><strong id="simplification-health">&mdash;</strong></div>
+              <div><span>Model</span><strong id="simplification-model">&mdash;</strong></div>
+              <div><span>Revision</span><strong id="simplification-revision">&mdash;</strong></div>
+              <div><span>Device</span><strong id="simplification-device">&mdash;</strong></div>
+              <div><span>Warm / Cold</span><strong id="simplification-warm">&mdash;</strong></div>
+              <div><span>Prompt version</span><strong id="simplification-prompt-version">&mdash;</strong></div>
+              <div><span>Prompt tokens</span><strong id="simplification-prompt-tokens">&mdash;</strong></div>
+              <div><span>Generated tokens</span><strong id="simplification-output-tokens">&mdash;</strong></div>
+              <div><span>Generation time</span><strong id="simplification-generation-time">&mdash;</strong></div>
+              <div><span>Total processing time</span><strong id="simplification-total-time">&mdash;</strong></div>
+              <div><span>Cache</span><strong id="simplification-cache">&mdash;</strong></div>
+            </div>
+            <p class="small text-secondary">Generation time is shared across all three levels below (single inference call); it is not a separate cost per level.</p>
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item"><button class="nav-link active" data-tab-target="level-tab-clinical" type="button">Level 1 &middot; Clinical</button></li>
+              <li class="nav-item"><button class="nav-link" data-tab-target="level-tab-general_public" type="button">Level 2 &middot; General Public</button></li>
+              <li class="nav-item"><button class="nav-link" data-tab-target="level-tab-child_friendly" type="button">Level 3 &middot; Child-Friendly</button></li>
+              <li class="nav-item"><button class="nav-link" data-tab-target="simplification-tab-json" type="button">JSON</button></li>
+            </ul>
+            <div class="tab-content border border-top-0 rounded-bottom p-3" id="simplification-levels"></div>
+            <button id="run-verification" class="btn btn-primary mt-3" type="button" disabled>Verify Output</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-12">
+        <section class="card stage-card" id="verification-section">
+          <div class="card-body p-4">
+            <div class="stage-heading"><span class="stage-number">5</span><div><div class="d-flex flex-wrap gap-2 align-items-center"><h2>Medical Verification</h2><span id="verification-state" class="status status-loading">Waiting</span></div><p>Model: pritamdeka/PubMedBERT-MNLI-MedNLI. Label mapping: 0=contradiction, 1=entailment, 2=neutral.</p></div></div>
+            <div class="metadata-grid mb-3">
+              <div><span>Health</span><strong id="verification-health">&mdash;</strong></div>
+              <div><span>Model</span><strong id="verification-model">&mdash;</strong></div>
+              <div><span>Revision</span><strong id="verification-revision">&mdash;</strong></div>
+              <div><span>Device</span><strong id="verification-device">&mdash;</strong></div>
+              <div><span>Warm / Cold</span><strong id="verification-warm">&mdash;</strong></div>
+              <div><span>License status</span><strong id="verification-license">&mdash;</strong></div>
+            </div>
+            <div id="verification-cards" class="row g-3"></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-12">
+        <section class="card stage-card" id="translation-section">
+          <div class="card-body p-4">
+            <div class="stage-heading"><span class="stage-number">6</span><div><div class="d-flex flex-wrap gap-2 align-items-center"><h2>Translation</h2><span id="translation-state" class="status status-loading">Waiting</span></div><p>Model: ai4bharat/indictrans2-en-indic-dist-200M.</p></div></div>
+            <div class="row g-3 mb-3">
+              <div class="col-md-4">
+                <label for="translate-level" class="form-label">Validated level to translate</label>
+                <select id="translate-level" class="form-select"><option value="">Run verification first</option></select>
+              </div>
+              <div class="col-md-4">
+                <label for="target-language" class="form-label">Target language</label>
+                <select id="target-language" class="form-select"></select>
+              </div>
+              <div class="col-md-4 d-grid align-self-end">
+                <button id="run-translation" class="btn btn-primary" type="button" disabled>Run Translation</button>
+              </div>
+            </div>
+            <div id="translation-blocked-notice" class="alert alert-danger d-none"></div>
+            <div class="metadata-grid mb-3">
+              <div><span>Health</span><strong id="translation-health">&mdash;</strong></div>
+              <div><span>Model</span><strong id="translation-model">&mdash;</strong></div>
+              <div><span>Revision</span><strong id="translation-revision">&mdash;</strong></div>
+              <div><span>Device</span><strong id="translation-device">&mdash;</strong></div>
+              <div><span>Warm / Cold</span><strong id="translation-warm">&mdash;</strong></div>
+              <div><span>Source language</span><strong id="translation-source">&mdash;</strong></div>
+              <div><span>Target language</span><strong id="translation-target">&mdash;</strong></div>
+              <div><span>Latency</span><strong id="translation-latency">&mdash;</strong></div>
+            </div>
+            <div id="translation-warnings" class="alert alert-warning d-none"></div>
+            <textarea id="translated-output" class="form-control output-text" rows="7" readonly placeholder="Translated report will appear here."></textarea>
+            <details class="mt-3"><summary>Raw JSON</summary><pre id="translation-json" class="json-output">No response yet.</pre></details>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-12">
+        <section class="card stage-card" id="performance-section">
+          <div class="card-body p-4">
+            <h2 class="h5 mb-3">Performance Panel</h2>
+            <p class="small text-secondary">Latency values come directly from the executed responses above. A row shows <code>NOT EXPOSED</code> when the backend does not currently return that breakdown.</p>
+            <div class="table-responsive">
+              <table class="table table-sm align-middle">
+                <thead><tr><th>Stage</th><th>Latency</th><th>% of E2E</th><th>Model / Device</th></tr></thead>
+                <tbody id="performance-waterfall"><tr><td colspan="4" class="text-secondary">Run a stage to populate the waterfall.</td></tr></tbody>
+              </table>
+            </div>
+            <div class="metadata-grid">
+              <div><span>Total E2E latency</span><strong id="perf-total">&mdash;</strong></div>
+              <div><span>Cold / Warm</span><strong id="perf-cold-warm">NOT EXPOSED</strong></div>
+              <div><span>Time to first meaningful result</span><strong id="perf-first-result">&mdash;</strong></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-12">
+        <section class="card stage-card" id="safety-section">
+          <div class="card-body p-4">
+            <h2 class="h5 mb-3">Safety Checks</h2>
+            <div id="safety-panel"><p class="text-secondary">Run verification to view the safety summary.</p></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-12">
+        <section class="card stage-card" id="runtime-stats-section">
+          <div class="card-body p-4">
+            <button class="btn btn-outline-secondary d-flex justify-content-between align-items-center w-100" type="button" data-bs-toggle="collapse" data-bs-target="#runtime-stats-body" aria-expanded="false">
+              <span>Runtime Stats</span><span>&#9660;</span>
+            </button>
+            <div class="collapse mt-3" id="runtime-stats-body">
+              <h3 class="h6">GPU</h3>
+              <div class="metadata-grid mb-3">
+                <div><span>GPU name</span><strong id="runtime-gpu-name">&mdash;</strong></div>
+                <div><span>CUDA available</span><strong id="runtime-gpu-available">&mdash;</strong></div>
+                <div><span>Resolved device</span><strong id="runtime-gpu-device">&mdash;</strong></div>
+                <div><span>CPU fallback</span><strong id="runtime-gpu-fallback">&mdash;</strong></div>
+                <div><span>GPU memory allocated</span><strong id="runtime-gpu-allocated">&mdash;</strong></div>
+                <div><span>GPU memory reserved</span><strong id="runtime-gpu-reserved">&mdash;</strong></div>
+                <div><span>Peak GPU memory</span><strong id="runtime-gpu-peak">&mdash;</strong></div>
+                <div><span>Total GPU memory</span><strong id="runtime-gpu-total">&mdash;</strong></div>
+                <div><span>GPU utilization</span><strong id="runtime-gpu-utilization">&mdash;</strong></div>
+              </div>
+              <h3 class="h6">CPU / RAM</h3>
+              <div class="metadata-grid mb-3">
+                <div><span>Process RSS</span><strong id="runtime-cpu-rss">&mdash;</strong></div>
+                <div><span>Process CPU usage</span><strong id="runtime-cpu-percent">&mdash;</strong></div>
+              </div>
+              <h3 class="h6">Models</h3>
+              <div class="table-responsive">
+                <table class="table table-sm align-middle">
+                  <thead><tr><th>Stage</th><th>Provider</th><th>Repository / Model</th><th>Revision</th><th>License</th><th>Device</th><th>Dtype</th><th>Warm / Cold</th><th>Requests</th><th>Load timestamp</th><th>Load duration</th></tr></thead>
+                  <tbody id="runtime-models-table"><tr><td colspan="9" class="text-secondary">Loading&hellip;</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-12">
+        <section class="card stage-card" id="infrastructure-section">
+          <div class="card-body p-4">
+            <div class="stage-heading"><span class="stage-number">&mdash;</span><div><h2>Infrastructure</h2><p>Production persistence, caching, and durable worker orchestration.</p></div><span class="status status-architecture" id="infrastructure-state">Architecture Complete</span></div>
+            <div class="row g-3">
+              <div class="col-md-4"><div class="future-tile"><strong>PostgreSQL</strong><span id="postgresql-state" class="status status-architecture">Checking</span></div></div>
+              <div class="col-md-4"><div class="future-tile"><strong>Redis</strong><span id="redis-state" class="status status-architecture">Checking</span></div></div>
+              <div class="col-md-4"><div class="future-tile"><strong>Celery</strong><span id="celery-state" class="status status-architecture">Checking</span></div></div>
+            </div>
+            <a class="btn btn-sm btn-outline-primary mt-3" href="/infrastructure">Open Infrastructure Dashboard</a>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-lg-6">
+        <section class="card stage-card h-100" id="tts-section">
+          <div class="card-body p-4">
+            <div class="stage-heading compact-heading"><span class="stage-number">&mdash;</span><div><h2>TTS</h2><p>Speech output</p></div></div>
+            <span class="status status-frozen">Frozen</span>
+            <p class="small text-secondary mt-3 mb-0">The Kokoro provider architecture is preserved; no runtime is invoked by this console.</p>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-12">
+        <section class="card stage-card" id="api-inspector-section">
+          <div class="card-body p-4">
+            <h2 class="h5 mb-3">Raw API Inspector</h2>
+            <p class="small text-secondary">Every call this console made, in order. No authentication secrets or environment values are shown.</p>
+            <div id="api-inspector-list">
+              <p class="text-secondary">No API calls executed yet.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <footer class="py-4 mt-4 text-secondary small d-flex flex-wrap justify-content-between gap-2">
+      <span>Internal engineering tool only &middot; Not the patient-facing product</span>
+      <span>No diagnosis or treatment advice</span>
+    </footer>
+  </main>
+  <script src="/static/engineering_demo.js"></script>
+</body>
+</html>

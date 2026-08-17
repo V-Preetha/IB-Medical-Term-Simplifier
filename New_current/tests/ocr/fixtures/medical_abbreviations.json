@@ -1,0 +1,7 @@
+{
+  "abbreviations": {
+    "BP": "blood pressure (BP)",
+    "Hb": "hemoglobin (Hb)"
+  },
+  "protected_tokens": ["CBC", "HbA1c", "MRI"]
+}

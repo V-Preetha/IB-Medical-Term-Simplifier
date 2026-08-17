@@ -1,0 +1,77 @@
+{
+  "benchmark_schema_version": "indictrans2-runtime-benchmark-v1",
+  "model": {
+    "model_name": "ai4bharat/indictrans2-en-indic-dist-200M",
+    "model_revision": "173b94239f7c38886b2747b8d4a5db771a7e1232",
+    "device": "cuda",
+    "configuration": {
+      "local_files_only": true,
+      "supported_languages": {
+        "hin_Deva": "Hindi",
+        "ben_Beng": "Bengali",
+        "guj_Gujr": "Gujarati",
+        "kan_Knda": "Kannada",
+        "mal_Mlym": "Malayalam",
+        "mar_Deva": "Marathi",
+        "ory_Orya": "Odia",
+        "pan_Guru": "Punjabi",
+        "tam_Taml": "Tamil",
+        "tel_Telu": "Telugu"
+      },
+      "preservation_policy": "numeric-unit-bracketed-placeholders-v2",
+      "model_loading_time_ms": 2133.898,
+      "manifest_approved": true,
+      "checksum_verified": true,
+      "primary_weight_artifact": "model.safetensors",
+      "dynamic_module_cache": "repository_local",
+      "generation_use_cache": false,
+      "max_new_tokens": 256
+    }
+  },
+  "first_inference_ms": 4750.691,
+  "warm_inference_ms": 2217.984,
+  "batch_inference_ms": 3459.98,
+  "batch_texts_per_second": 0.867,
+  "process_rss_mib": 1982.383,
+  "peak_gpu_memory_mib": 616.467,
+  "measurements": [
+    {
+      "language": "hin_Deva",
+      "source": "HbA1c is 8.7%. Metformin 500 mg twice daily.",
+      "translated": "एच. बी. ए. 1. सी. 8.7% है. मेटफॉर्मिन 500 mg दिन में दो बार।",
+      "latency_ms": 4750.691,
+      "protected_values": [
+        "8.7%",
+        "500 mg"
+      ],
+      "protected_values_preserved": true
+    },
+    {
+      "language": "tam_Taml",
+      "source": "Blood pressure is 140/90 mmHg. Glucose is 126 mg/dL.",
+      "translated": "இரத்த அழுத்தம் 140/90 mmHg. குளுக்கோஸ் 126 mg/dL.",
+      "latency_ms": 2217.984,
+      "protected_values": [
+        "140/90 mmHg",
+        "126 mg/dL"
+      ],
+      "protected_values_preserved": true
+    },
+    {
+      "language": "kan_Knda",
+      "source": "Stage II breast cancer follow-up is dated 15/10/2024.",
+      "translated": "ಎರಡನೇ ಹಂತದ ಸ್ತನ ಕ್ಯಾನ್ಸರ್ ಫಾಲೋ-ಅಪ್ ದಿನಾಂಕವನ್ನು ನಿಗದಿಪಡಿಸಲಾಗಿದೆ 15/10/2024.",
+      "latency_ms": 1800.207,
+      "protected_values": [
+        "15/10/2024"
+      ],
+      "protected_values_preserved": true
+    }
+  ],
+  "batch_target_language": "hin_Deva",
+  "batch_outputs": [
+    "एच. बी. ए. 1. सी. 8.7% है. मेटफॉर्मिन 500 mg दिन में दो बार।",
+    "रक्तचाप 140/90 mmHg है. ग्लूकोज 126 mg/dL है।",
+    "चरण II स्तन कैंसर अनुवर्ती कार्रवाई दिनांकित है 15/10/2024।"
+  ]
+}

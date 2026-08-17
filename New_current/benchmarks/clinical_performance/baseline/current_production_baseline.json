@@ -1,0 +1,13 @@
+{
+  "status": "BASELINE_CAPTURED_NOT_CLINICALLY_VALIDATED",
+  "warm_e2e_latency_ms": 22185.073,
+  "pipeline": "Qwen3-VL OCR -> post-processing -> biomedical-ner-all -> Qwen3 simplification -> PubMedBERT verification -> IndicTrans2",
+  "stages": {
+    "ocr_postprocessing": {"latency_ms": 7123.953, "model": "Qwen/Qwen3-VL-4B-Instruct"},
+    "ner": {"latency_ms": 27.964, "model": "d4data/biomedical-ner-all"},
+    "simplification": {"latency_ms": 14264.999, "model": "Qwen/Qwen3-0.6B"},
+    "verification": {"latency_ms_range": [6.635, 367.517], "model": "pritamdeka/PubMedBERT-MNLI-MedNLI"},
+    "translation": {"latency_ms": 768.157, "model": "ai4bharat/indictrans2-en-indic-dist-200M"}
+  },
+  "unvalidated_candidates": ["ocr_512px", "fp16", "int8", "4bit", "compact_simplification_schema", "future_model_replacement"]
+}

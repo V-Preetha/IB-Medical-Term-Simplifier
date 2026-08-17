@@ -1,0 +1,7 @@
+body { background: #f4f7fb; color: #172033; }
+.card { border: 0; border-radius: 1rem; }
+.output { background: #111827; color: #dbeafe; border-radius: .75rem; padding: 1rem; max-height: 32rem; overflow: auto; white-space: pre-wrap; }
+.metric { background: #eef4ff; border-radius: .75rem; padding: .8rem; min-height: 5rem; }
+.metric span { display: block; color: #64748b; font-size: .8rem; text-transform: uppercase; }
+.metric strong { display: block; overflow-wrap: anywhere; }
+textarea { resize: vertical; }

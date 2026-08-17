@@ -1,0 +1,6 @@
+PyMuPDF>=1.25,<2
+Pillow>=11,<12
+torch>=2.5
+transformers>=4.53
+accelerate>=1.2
+safetensors>=0.4

@@ -1,0 +1,1284 @@
+{
+  "schema_version": "ner-benchmark-report-v2",
+  "generated_at": "2026-08-04T18:17:46.722508+00:00",
+  "dataset": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\New_current\\benchmarks\\ner\\dataset_template.jsonl",
+  "dataset_records": 4,
+  "configuration": {
+    "schema_version": "ner-evaluation-config-v1",
+    "device": "cpu",
+    "confidence_threshold": 0.5,
+    "max_tokens": 512,
+    "label_mappings": {
+      "openmed-gliner": {},
+      "biomedical-ner-all": {
+        "Disease_disorder": "Disease",
+        "Sign_symptom": "Symptom",
+        "Medication": "Medication",
+        "Therapeutic_procedure": "Procedure",
+        "Diagnostic_procedure": "Procedure",
+        "Biological_structure": "Anatomy",
+        "Lab_value": "Measurement",
+        "Dosage": "Measurement",
+        "Quantitative_concept": "Measurement",
+        "Mass": "Measurement",
+        "Volume": "Measurement",
+        "Weight": "Measurement",
+        "Height": "Measurement"
+      },
+      "modernbert-biomedical-ner": {
+        "DISEASE": "Disease",
+        "SMALL_MOLECULE": "Medication",
+        "TISSUE": "Anatomy",
+        "EXP_ASSAY": "Laboratory Test"
+      }
+    }
+  },
+  "runtime": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.13 (main, Mar  3 2026, 15:01:35) [MSC v.1944 64 bit (AMD64)]",
+    "torch": "2.13.0+cpu",
+    "cuda_available": false
+  },
+  "winner": null,
+  "recommended_candidate": "biomedical-ner-all",
+  "recommendation_basis": "Highest macro F1 across all eight canonical entity types; overall F1 and mean inference latency are deterministic tie-breakers.",
+  "leaderboard": [
+    {
+      "rank": 1,
+      "candidate": "biomedical-ner-all",
+      "macro_f1_score": 0.38125,
+      "overall_f1_score": 0.333333,
+      "mean_inference_latency_ms": 22.6545
+    },
+    {
+      "rank": 2,
+      "candidate": "modernbert-biomedical-ner",
+      "macro_f1_score": 0.170833,
+      "overall_f1_score": 0.222222,
+      "mean_inference_latency_ms": 56.28925
+    },
+    {
+      "rank": 3,
+      "candidate": "openmed-gliner",
+      "macro_f1_score": 0.083333,
+      "overall_f1_score": 0.086957,
+      "mean_inference_latency_ms": 114.42775
+    }
+  ],
+  "candidates": {
+    "openmed-gliner": {
+      "status": "PASS",
+      "model": {
+        "repository_id": "OpenMed/OpenMed-ZeroShot-NER-Pathology-Medium-209M",
+        "revision": "e63d8b131d599970674d05617bdbd1a3eef495ee",
+        "license": "Apache-2.0",
+        "local_cache": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\New_current\\.model-cache\\ner\\openmed-gliner",
+        "observed_tree_sha256": "4a8ba53c9d9ce72a2acfc431afc16d5127da06b669960c1434e27e97d134d3ef",
+        "artifact_file_count": 10,
+        "artifact_bytes": 791924184,
+        "framework": "gliner",
+        "device": "cpu",
+        "configuration": {
+          "local_files_only": true,
+          "cache_path": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\New_current\\.model-cache\\ner\\openmed-gliner",
+          "confidence_threshold": 0.5,
+          "label_mapping_version": "canonical-medical-entities-v1",
+          "candidate_only": true
+        }
+      },
+      "documents": [
+        {
+          "document_id": "synthetic-clinical-001",
+          "document_index": 0,
+          "reference_entities": [
+            {
+              "text": "type 2 diabetes",
+              "label": "Disease",
+              "start": 17,
+              "end": 32,
+              "confidence": 1.0
+            },
+            {
+              "text": "fatigue",
+              "label": "Symptom",
+              "start": 41,
+              "end": 48,
+              "confidence": 1.0
+            },
+            {
+              "text": "metformin",
+              "label": "Medication",
+              "start": 59,
+              "end": 68,
+              "confidence": 1.0
+            },
+            {
+              "text": "500 mg",
+              "label": "Measurement",
+              "start": 69,
+              "end": 75,
+              "confidence": 1.0
+            }
+          ],
+          "entities": [
+            {
+              "text": "type 2 diabetes",
+              "label": "Laboratory Test",
+              "start": 17,
+              "end": 32,
+              "confidence": 0.8943018913269043
+            },
+            {
+              "text": "fatigue",
+              "label": "Measurement",
+              "start": 41,
+              "end": 48,
+              "confidence": 0.8077157139778137
+            }
+          ],
+          "metrics": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "entity_level_accuracy": 0.0,
+            "false_positives": 2,
+            "false_negatives": 4,
+            "inference_latency_ms": 191.607,
+            "peak_ram_mb": 1969.691,
+            "peak_gpu_memory_mb": null,
+            "model_loading_time_ms": 6444.307,
+            "tokens_per_second": 83.504
+          },
+          "warnings": []
+        },
+        {
+          "document_id": "synthetic-radiology-002",
+          "document_index": 1,
+          "reference_entities": [
+            {
+              "text": "chest X-ray",
+              "label": "Procedure",
+              "start": 2,
+              "end": 13,
+              "confidence": 1.0
+            },
+            {
+              "text": "left lung",
+              "label": "Anatomy",
+              "start": 44,
+              "end": 53,
+              "confidence": 1.0
+            },
+            {
+              "text": "pneumonia",
+              "label": "Disease",
+              "start": 65,
+              "end": 74,
+              "confidence": 1.0
+            }
+          ],
+          "entities": [
+            {
+              "text": "pneumonia",
+              "label": "Anatomy",
+              "start": 65,
+              "end": 74,
+              "confidence": 0.8957290053367615
+            }
+          ],
+          "metrics": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "entity_level_accuracy": 0.0,
+            "false_positives": 1,
+            "false_negatives": 3,
+            "inference_latency_ms": 89.746,
+            "peak_ram_mb": 1970.672,
+            "peak_gpu_memory_mb": null,
+            "model_loading_time_ms": 6444.307,
+            "tokens_per_second": 200.566
+          },
+          "warnings": []
+        },
+        {
+          "document_id": "synthetic-lab-003",
+          "document_index": 2,
+          "reference_entities": [
+            {
+              "text": "CBC",
+              "label": "Medical Abbreviation",
+              "start": 0,
+              "end": 3,
+              "confidence": 1.0
+            },
+            {
+              "text": "hemoglobin",
+              "label": "Laboratory Test",
+              "start": 11,
+              "end": 21,
+              "confidence": 1.0
+            },
+            {
+              "text": "10.2 g/dL",
+              "label": "Measurement",
+              "start": 25,
+              "end": 34,
+              "confidence": 1.0
+            },
+            {
+              "text": "BP",
+              "label": "Medical Abbreviation",
+              "start": 40,
+              "end": 42,
+              "confidence": 1.0
+            },
+            {
+              "text": "150/95 mmHg",
+              "label": "Measurement",
+              "start": 47,
+              "end": 58,
+              "confidence": 1.0
+            }
+          ],
+          "entities": [
+            {
+              "text": "CBC",
+              "label": "Laboratory Test",
+              "start": 0,
+              "end": 3,
+              "confidence": 0.804885983467102
+            },
+            {
+              "text": "BP",
+              "label": "Medical Abbreviation",
+              "start": 40,
+              "end": 42,
+              "confidence": 0.7054492831230164
+            }
+          ],
+          "metrics": {
+            "precision": 0.5,
+            "recall": 0.2,
+            "f1_score": 0.28571428571428575,
+            "entity_level_accuracy": 0.16666666666666666,
+            "false_positives": 1,
+            "false_negatives": 4,
+            "inference_latency_ms": 86.448,
+            "peak_ram_mb": 1971.609,
+            "peak_gpu_memory_mb": null,
+            "model_loading_time_ms": 6444.307,
+            "tokens_per_second": 242.921
+          },
+          "warnings": []
+        },
+        {
+          "document_id": "synthetic-surgery-004",
+          "document_index": 3,
+          "reference_entities": [
+            {
+              "text": "Appendectomy",
+              "label": "Procedure",
+              "start": 0,
+              "end": 12,
+              "confidence": 1.0
+            },
+            {
+              "text": "appendicitis",
+              "label": "Disease",
+              "start": 31,
+              "end": 43,
+              "confidence": 1.0
+            },
+            {
+              "text": "appendix",
+              "label": "Anatomy",
+              "start": 58,
+              "end": 66,
+              "confidence": 1.0
+            }
+          ],
+          "entities": [
+            {
+              "text": "Appendectomy",
+              "label": "Measurement",
+              "start": 0,
+              "end": 12,
+              "confidence": 0.7890706062316895
+            },
+            {
+              "text": "appendicitis",
+              "label": "Medication",
+              "start": 31,
+              "end": 43,
+              "confidence": 0.8335722088813782
+            },
+            {
+              "text": "appendix",
+              "label": "Measurement",
+              "start": 58,
+              "end": 66,
+              "confidence": 0.6746553778648376
+            }
+          ],
+          "metrics": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "entity_level_accuracy": 0.0,
+            "false_positives": 3,
+            "false_negatives": 3,
+            "inference_latency_ms": 89.91,
+            "peak_ram_mb": 1972.75,
+            "peak_gpu_memory_mb": null,
+            "model_loading_time_ms": 6444.307,
+            "tokens_per_second": 133.467
+          },
+          "warnings": []
+        }
+      ],
+      "per_entity_metrics": {
+        "Disease": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "entity_level_accuracy": 0.0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 3,
+          "reference_count": 3,
+          "predicted_count": 0
+        },
+        "Symptom": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "entity_level_accuracy": 0.0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 1,
+          "reference_count": 1,
+          "predicted_count": 0
+        },
+        "Medication": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "entity_level_accuracy": 0.0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
+          "reference_count": 1,
+          "predicted_count": 1
+        },
+        "Procedure": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "entity_level_accuracy": 0.0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 2,
+          "reference_count": 2,
+          "predicted_count": 0
+        },
+        "Anatomy": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "entity_level_accuracy": 0.0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 2,
+          "reference_count": 2,
+          "predicted_count": 1
+        },
+        "Laboratory Test": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "entity_level_accuracy": 0.0,
+          "true_positives": 0,
+          "false_positives": 2,
+          "false_negatives": 1,
+          "reference_count": 1,
+          "predicted_count": 2
+        },
+        "Measurement": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "entity_level_accuracy": 0.0,
+          "true_positives": 0,
+          "false_positives": 3,
+          "false_negatives": 3,
+          "reference_count": 3,
+          "predicted_count": 3
+        },
+        "Medical Abbreviation": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1_score": 0.666667,
+          "entity_level_accuracy": 0.5,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 1,
+          "reference_count": 2,
+          "predicted_count": 1
+        }
+      },
+      "summary": {
+        "precision": 0.125,
+        "recall": 0.066667,
+        "f1_score": 0.086957,
+        "entity_level_accuracy": 0.045455,
+        "true_positives": 1,
+        "false_positives": 7,
+        "false_negatives": 14,
+        "reference_count": 15,
+        "predicted_count": 8,
+        "macro_f1_score": 0.083333,
+        "mean_inference_latency_ms": 114.42775,
+        "mean_tokens_per_second": 165.1145,
+        "peak_ram_mb": 1972.75,
+        "peak_gpu_memory_mb": null,
+        "model_loading_time_ms": 6444.307
+      }
+    },
+    "biomedical-ner-all": {
+      "status": "PASS",
+      "model": {
+        "repository_id": "d4data/biomedical-ner-all",
+        "revision": "015a4050c9ac99722e61c547aa9b4282bcbedc7f",
+        "license": "Apache-2.0",
+        "local_cache": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\New_current\\.model-cache\\ner\\biomedical-ner-all",
+        "observed_tree_sha256": "6884545271a453eed4ff94f5e718105154c83104a7188bdcf424693ab6768493",
+        "artifact_file_count": 9,
+        "artifact_bytes": 532418585,
+        "framework": "transformers-token-classification",
+        "device": "cpu",
+        "configuration": {
+          "local_files_only": true,
+          "cache_path": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\New_current\\.model-cache\\ner\\biomedical-ner-all",
+          "confidence_threshold": 0.5,
+          "label_mapping_version": "canonical-medical-entities-v1",
+          "candidate_only": true
+        }
+      },
+      "documents": [
+        {
+          "document_id": "synthetic-clinical-001",
+          "document_index": 0,
+          "reference_entities": [
+            {
+              "text": "type 2 diabetes",
+              "label": "Disease",
+              "start": 17,
+              "end": 32,
+              "confidence": 1.0
+            },
+            {
+              "text": "fatigue",
+              "label": "Symptom",
+              "start": 41,
+              "end": 48,
+              "confidence": 1.0
+            },
+            {
+              "text": "metformin",
+              "label": "Medication",
+              "start": 59,
+              "end": 68,
+              "confidence": 1.0
+            },
+            {
+              "text": "500 mg",
+              "label": "Measurement",
+              "start": 69,
+              "end": 75,
+              "confidence": 1.0
+            }
+          ],
+          "entities": [
+            {
+              "text": "type 2 diabetes",
+              "label": "Disease",
+              "start": 17,
+              "end": 32,
+              "confidence": 0.9938091238339742
+            },
+            {
+              "text": "fatigue",
+              "label": "Symptom",
+              "start": 41,
+              "end": 48,
+              "confidence": 0.9997962117195129
+            },
+            {
+              "text": "metformin",
+              "label": "Medication",
+              "start": 59,
+              "end": 68,
+              "confidence": 0.9994455774625143
+            }
+          ],
+          "metrics": {
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1_score": 0.8571428571428571,
+            "entity_level_accuracy": 0.75,
+            "false_positives": 0,
+            "false_negatives": 1,
+            "inference_latency_ms": 52.482,
+            "peak_ram_mb": 1217.066,
+            "peak_gpu_memory_mb": null,
+            "model_loading_time_ms": 125.386,
+            "tokens_per_second": 342.975
+          },
+          "warnings": []
+        },
+        {
+          "document_id": "synthetic-radiology-002",
+          "document_index": 1,
+          "reference_entities": [
+            {
+              "text": "chest X-ray",
+              "label": "Procedure",
+              "start": 2,
+              "end": 13,
+              "confidence": 1.0
+            },
+            {
+              "text": "left lung",
+              "label": "Anatomy",
+              "start": 44,
+              "end": 53,
+              "confidence": 1.0
+            },
+            {
+              "text": "pneumonia",
+              "label": "Disease",
+              "start": 65,
+              "end": 74,
+              "confidence": 1.0
+            }
+          ],
+          "entities": [
+            {
+              "text": "chest",
+              "label": "Anatomy",
+              "start": 2,
+              "end": 7,
+              "confidence": 0.9999520778656006
+            },
+            {
+              "text": "X-ray",
+              "label": "Procedure",
+              "start": 8,
+              "end": 13,
+              "confidence": 0.99991774559021
+            },
+            {
+              "text": "left",
+              "label": "Anatomy",
+              "start": 44,
+              "end": 48,
+              "confidence": 0.9440324306488037
+            },
+            {
+              "text": "lung",
+              "label": "Anatomy",
+              "start": 49,
+              "end": 53,
+              "confidence": 0.9985748529434204
+            }
+          ],
+          "metrics": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "entity_level_accuracy": 0.0,
+            "false_positives": 4,
+            "false_negatives": 3,
+            "inference_latency_ms": 12.325,
+            "peak_ram_mb": 1177.09,
+            "peak_gpu_memory_mb": null,
+            "model_loading_time_ms": 125.386,
+            "tokens_per_second": 1460.446
+          },
+          "warnings": []
+        },
+        {
+          "document_id": "synthetic-lab-003",
+          "document_index": 2,
+          "reference_entities": [
+            {
+              "text": "CBC",
+              "label": "Medical Abbreviation",
+              "start": 0,
+              "end": 3,
+              "confidence": 1.0
+            },
+            {
+              "text": "hemoglobin",
+              "label": "Laboratory Test",
+              "start": 11,
+              "end": 21,
+              "confidence": 1.0
+            },
+            {
+              "text": "10.2 g/dL",
+              "label": "Measurement",
+              "start": 25,
+              "end": 34,
+              "confidence": 1.0
+            },
+            {
+              "text": "BP",
+              "label": "Medical Abbreviation",
+              "start": 40,
+              "end": 42,
+              "confidence": 1.0
+            },
+            {
+              "text": "150/95 mmHg",
+              "label": "Measurement",
+              "start": 47,
+              "end": 58,
+              "confidence": 1.0
+            }
+          ],
+          "entities": [
+            {
+              "text": "CBC",
+              "label": "Procedure",
+              "start": 0,
+              "end": 3,
+              "confidence": 0.999970555305481
+            },
+            {
+              "text": "hem",
+              "label": "Procedure",
+              "start": 11,
+              "end": 14,
+              "confidence": 0.999958872795105
+            },
+            {
+              "text": "oglobin",
+              "label": "Procedure",
+              "start": 14,
+              "end": 21,
+              "confidence": 0.9989651838938395
+            },
+            {
+              "text": "10.2",
+              "label": "Measurement",
+              "start": 25,
+              "end": 29,
+              "confidence": 0.985451896985372
+            },
+            {
+              "text": "BP",
+              "label": "Procedure",
+              "start": 40,
+              "end": 42,
+              "confidence": 0.9999686479568481
+            },
+            {
+              "text": "150/95 mm",
+              "label": "Measurement",
+              "start": 47,
+              "end": 56,
+              "confidence": 0.9191837459802628
+            }
+          ],
+          "metrics": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "entity_level_accuracy": 0.0,
+            "false_positives": 6,
+            "false_negatives": 5,
+            "inference_latency_ms": 14.182,
+            "peak_ram_mb": 1177.766,
+            "peak_gpu_memory_mb": null,
+            "model_loading_time_ms": 125.386,
+            "tokens_per_second": 1762.798
+          },
+          "warnings": []
+        },
+        {
+          "document_id": "synthetic-surgery-004",
+          "document_index": 3,
+          "reference_entities": [
+            {
+              "text": "Appendectomy",
+              "label": "Procedure",
+              "start": 0,
+              "end": 12,
+              "confidence": 1.0
+            },
+            {
+              "text": "appendicitis",
+              "label": "Disease",
+              "start": 31,
+              "end": 43,
+              "confidence": 1.0
+            },
+            {
+              "text": "appendix",
+              "label": "Anatomy",
+              "start": 58,
+              "end": 66,
+              "confidence": 1.0
+            }
+          ],
+          "entities": [
+            {
+              "text": "Appendectomy",
+              "label": "Procedure",
+              "start": 0,
+              "end": 12,
+              "confidence": 0.9867644757032394
+            },
+            {
+              "text": "appendicitis",
+              "label": "Disease",
+              "start": 31,
+              "end": 43,
+              "confidence": 0.996240109205246
+            }
+          ],
+          "metrics": {
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1_score": 0.8,
+            "entity_level_accuracy": 0.6666666666666666,
+            "false_positives": 0,
+            "false_negatives": 1,
+            "inference_latency_ms": 11.629,
+            "peak_ram_mb": 1177.836,
+            "peak_gpu_memory_mb": null,
+            "model_loading_time_ms": 125.386,
+            "tokens_per_second": 1461.863
+          },
+          "warnings": []
+        }
+      ],
+      "per_entity_metrics": {
+        "Disease": {
+          "precision": 1.0,
+          "recall": 0.666667,
+          "f1_score": 0.8,
+          "entity_level_accuracy": 0.666667,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 1,
+          "reference_count": 3,
+          "predicted_count": 2
+        },
+        "Symptom": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "entity_level_accuracy": 1.0,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "reference_count": 1,
+          "predicted_count": 1
+        },
+        "Medication": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "entity_level_accuracy": 1.0,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "reference_count": 1,
+          "predicted_count": 1
+        },
+        "Procedure": {
+          "precision": 0.166667,
+          "recall": 0.5,
+          "f1_score": 0.25,
+          "entity_level_accuracy": 0.142857,
+          "true_positives": 1,
+          "false_positives": 5,
+          "false_negatives": 1,
+          "reference_count": 2,
+          "predicted_count": 6
+        },
+        "Anatomy": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "entity_level_accuracy": 0.0,
+          "true_positives": 0,
+          "false_positives": 3,
+          "false_negatives": 2,
+          "reference_count": 2,
+          "predicted_count": 3
+        },
+        "Laboratory Test": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "entity_level_accuracy": 0.0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 1,
+          "reference_count": 1,
+          "predicted_count": 0
+        },
+        "Measurement": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "entity_level_accuracy": 0.0,
+          "true_positives": 0,
+          "false_positives": 2,
+          "false_negatives": 3,
+          "reference_count": 3,
+          "predicted_count": 2
+        },
+        "Medical Abbreviation": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "entity_level_accuracy": 0.0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 2,
+          "reference_count": 2,
+          "predicted_count": 0
+        }
+      },
+      "summary": {
+        "precision": 0.333333,
+        "recall": 0.333333,
+        "f1_score": 0.333333,
+        "entity_level_accuracy": 0.2,
+        "true_positives": 5,
+        "false_positives": 10,
+        "false_negatives": 10,
+        "reference_count": 15,
+        "predicted_count": 15,
+        "macro_f1_score": 0.38125,
+        "mean_inference_latency_ms": 22.6545,
+        "mean_tokens_per_second": 1257.0205,
+        "peak_ram_mb": 1217.066,
+        "peak_gpu_memory_mb": null,
+        "model_loading_time_ms": 125.386
+      }
+    },
+    "modernbert-biomedical-ner": {
+      "status": "PASS",
+      "model": {
+        "repository_id": "Kushtrim/ModernBERT-base-biomedical-ner",
+        "revision": "a4ebc00ce8c52ac03ccaaae96600431b9e4c3e39",
+        "license": "Apache-2.0",
+        "local_cache": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\New_current\\.model-cache\\ner\\modernbert-biomedical",
+        "observed_tree_sha256": "8e7de26bcc7b9dc0851e219cf98179796cd7baa1944ef3239a697e0d091ae980",
+        "artifact_file_count": 8,
+        "artifact_bytes": 602110439,
+        "framework": "transformers-token-classification",
+        "device": "cpu",
+        "configuration": {
+          "local_files_only": true,
+          "cache_path": "E:\\Internships\\Icebrkr\\Medical-Term-Simplifier\\New_current\\.model-cache\\ner\\modernbert-biomedical",
+          "confidence_threshold": 0.5,
+          "label_mapping_version": "canonical-medical-entities-v1",
+          "candidate_only": true
+        }
+      },
+      "documents": [
+        {
+          "document_id": "synthetic-clinical-001",
+          "document_index": 0,
+          "reference_entities": [
+            {
+              "text": "type 2 diabetes",
+              "label": "Disease",
+              "start": 17,
+              "end": 32,
+              "confidence": 1.0
+            },
+            {
+              "text": "fatigue",
+              "label": "Symptom",
+              "start": 41,
+              "end": 48,
+              "confidence": 1.0
+            },
+            {
+              "text": "metformin",
+              "label": "Medication",
+              "start": 59,
+              "end": 68,
+              "confidence": 1.0
+            },
+            {
+              "text": "500 mg",
+              "label": "Measurement",
+              "start": 69,
+              "end": 75,
+              "confidence": 1.0
+            }
+          ],
+          "entities": [
+            {
+              "text": "type",
+              "label": "Disease",
+              "start": 17,
+              "end": 21,
+              "confidence": 0.7169191837310791
+            },
+            {
+              "text": "diabetes",
+              "label": "Disease",
+              "start": 24,
+              "end": 32,
+              "confidence": 0.7568788528442383
+            },
+            {
+              "text": "fatigue",
+              "label": "Disease",
+              "start": 41,
+              "end": 48,
+              "confidence": 0.9090442061424255
+            },
+            {
+              "text": "metformin",
+              "label": "Medication",
+              "start": 59,
+              "end": 68,
+              "confidence": 0.9924488067626953
+            }
+          ],
+          "metrics": {
+            "precision": 0.25,
+            "recall": 0.25,
+            "f1_score": 0.25,
+            "entity_level_accuracy": 0.14285714285714285,
+            "false_positives": 3,
+            "false_negatives": 3,
+            "inference_latency_ms": 111.256,
+            "peak_ram_mb": 867.938,
+            "peak_gpu_memory_mb": null,
+            "model_loading_time_ms": 175.454,
+            "tokens_per_second": 143.812
+          },
+          "warnings": []
+        },
+        {
+          "document_id": "synthetic-radiology-002",
+          "document_index": 1,
+          "reference_entities": [
+            {
+              "text": "chest X-ray",
+              "label": "Procedure",
+              "start": 2,
+              "end": 13,
+              "confidence": 1.0
+            },
+            {
+              "text": "left lung",
+              "label": "Anatomy",
+              "start": 44,
+              "end": 53,
+              "confidence": 1.0
+            },
+            {
+              "text": "pneumonia",
+              "label": "Disease",
+              "start": 65,
+              "end": 74,
+              "confidence": 1.0
+            }
+          ],
+          "entities": [
+            {
+              "text": "lung",
+              "label": "Anatomy",
+              "start": 49,
+              "end": 53,
+              "confidence": 0.7660568356513977
+            },
+            {
+              "text": "pneumonia",
+              "label": "Disease",
+              "start": 65,
+              "end": 74,
+              "confidence": 0.9895944595336914
+            }
+          ],
+          "metrics": {
+            "precision": 0.5,
+            "recall": 0.3333333333333333,
+            "f1_score": 0.4,
+            "entity_level_accuracy": 0.25,
+            "false_positives": 1,
+            "false_negatives": 2,
+            "inference_latency_ms": 36.473,
+            "peak_ram_mb": 868.656,
+            "peak_gpu_memory_mb": null,
+            "model_loading_time_ms": 175.454,
+            "tokens_per_second": 493.516
+          },
+          "warnings": []
+        },
+        {
+          "document_id": "synthetic-lab-003",
+          "document_index": 2,
+          "reference_entities": [
+            {
+              "text": "CBC",
+              "label": "Medical Abbreviation",
+              "start": 0,
+              "end": 3,
+              "confidence": 1.0
+            },
+            {
+              "text": "hemoglobin",
+              "label": "Laboratory Test",
+              "start": 11,
+              "end": 21,
+              "confidence": 1.0
+            },
+            {
+              "text": "10.2 g/dL",
+              "label": "Measurement",
+              "start": 25,
+              "end": 34,
+              "confidence": 1.0
+            },
+            {
+              "text": "BP",
+              "label": "Medical Abbreviation",
+              "start": 40,
+              "end": 42,
+              "confidence": 1.0
+            },
+            {
+              "text": "150/95 mmHg",
+              "label": "Measurement",
+              "start": 47,
+              "end": 58,
+              "confidence": 1.0
+            }
+          ],
+          "entities": [
+            {
+              "text": "CBC",
+              "label": "Laboratory Test",
+              "start": 0,
+              "end": 3,
+              "confidence": 0.7259806990623474
+            },
+            {
+              "text": "hemoglobin",
+              "label": "Medication",
+              "start": 11,
+              "end": 21,
+              "confidence": 0.8335273265838623
+            }
+          ],
+          "metrics": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "entity_level_accuracy": 0.0,
+            "false_positives": 2,
+            "false_negatives": 5,
+            "inference_latency_ms": 38.156,
+            "peak_ram_mb": 869.426,
+            "peak_gpu_memory_mb": null,
+            "model_loading_time_ms": 175.454,
+            "tokens_per_second": 550.372
+          },
+          "warnings": []
+        },
+        {
+          "document_id": "synthetic-surgery-004",
+          "document_index": 3,
+          "reference_entities": [
+            {
+              "text": "Appendectomy",
+              "label": "Procedure",
+              "start": 0,
+              "end": 12,
+              "confidence": 1.0
+            },
+            {
+              "text": "appendicitis",
+              "label": "Disease",
+              "start": 31,
+              "end": 43,
+              "confidence": 1.0
+            },
+            {
+              "text": "appendix",
+              "label": "Anatomy",
+              "start": 58,
+              "end": 66,
+              "confidence": 1.0
+            }
+          ],
+          "entities": [
+            {
+              "text": "append",
+              "label": "Disease",
+              "start": 31,
+              "end": 37,
+              "confidence": 0.9940517544746399
+            },
+            {
+              "text": "icit",
+              "label": "Disease",
+              "start": 37,
+              "end": 41,
+              "confidence": 0.9718874096870422
+            },
+            {
+              "text": "is",
+              "label": "Disease",
+              "start": 41,
+              "end": 43,
+              "confidence": 0.9400824904441833
+            },
+            {
+              "text": "appendix",
+              "label": "Anatomy",
+              "start": 58,
+              "end": 66,
+              "confidence": 0.8012929558753967
+            }
+          ],
+          "metrics": {
+            "precision": 0.25,
+            "recall": 0.3333333333333333,
+            "f1_score": 0.28571428571428575,
+            "entity_level_accuracy": 0.16666666666666666,
+            "false_positives": 3,
+            "false_negatives": 2,
+            "inference_latency_ms": 39.272,
+            "peak_ram_mb": 869.73,
+            "peak_gpu_memory_mb": null,
+            "model_loading_time_ms": 175.454,
+            "tokens_per_second": 356.488
+          },
+          "warnings": []
+        }
+      ],
+      "per_entity_metrics": {
+        "Disease": {
+          "precision": 0.142857,
+          "recall": 0.333333,
+          "f1_score": 0.2,
+          "entity_level_accuracy": 0.111111,
+          "true_positives": 1,
+          "false_positives": 6,
+          "false_negatives": 2,
+          "reference_count": 3,
+          "predicted_count": 7
+        },
+        "Symptom": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "entity_level_accuracy": 0.0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 1,
+          "reference_count": 1,
+          "predicted_count": 0
+        },
+        "Medication": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1_score": 0.666667,
+          "entity_level_accuracy": 0.5,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "reference_count": 1,
+          "predicted_count": 2
+        },
+        "Procedure": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "entity_level_accuracy": 0.0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 2,
+          "reference_count": 2,
+          "predicted_count": 0
+        },
+        "Anatomy": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1_score": 0.5,
+          "entity_level_accuracy": 0.333333,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 1,
+          "reference_count": 2,
+          "predicted_count": 2
+        },
+        "Laboratory Test": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "entity_level_accuracy": 0.0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
+          "reference_count": 1,
+          "predicted_count": 1
+        },
+        "Measurement": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "entity_level_accuracy": 0.0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 3,
+          "reference_count": 3,
+          "predicted_count": 0
+        },
+        "Medical Abbreviation": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "entity_level_accuracy": 0.0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 2,
+          "reference_count": 2,
+          "predicted_count": 0
+        }
+      },
+      "summary": {
+        "precision": 0.25,
+        "recall": 0.2,
+        "f1_score": 0.222222,
+        "entity_level_accuracy": 0.125,
+        "true_positives": 3,
+        "false_positives": 9,
+        "false_negatives": 12,
+        "reference_count": 15,
+        "predicted_count": 12,
+        "macro_f1_score": 0.170833,
+        "mean_inference_latency_ms": 56.28925,
+        "mean_tokens_per_second": 386.047,
+        "peak_ram_mb": 869.73,
+        "peak_gpu_memory_mb": null,
+        "model_loading_time_ms": 175.454
+      }
+    }
+  }
+}

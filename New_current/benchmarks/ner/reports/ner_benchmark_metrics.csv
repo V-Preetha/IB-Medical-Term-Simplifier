@@ -1,0 +1,4 @@
+candidate,status,precision,recall,f1_score,entity_level_accuracy,true_positives,false_positives,false_negatives,reference_count,predicted_count,macro_f1_score,mean_inference_latency_ms,mean_tokens_per_second,peak_ram_mb,peak_gpu_memory_mb,model_loading_time_ms,reason
+openmed-gliner,PASS,0.125,0.066667,0.086957,0.045455,1,7,14,15,8,0.083333,114.42775,165.1145,1972.75,,6444.307,
+biomedical-ner-all,PASS,0.333333,0.333333,0.333333,0.2,5,10,10,15,15,0.38125,22.6545,1257.0205,1217.066,,125.386,
+modernbert-biomedical-ner,PASS,0.25,0.2,0.222222,0.125,3,9,12,15,12,0.170833,56.28925,386.047,869.73,,175.454,

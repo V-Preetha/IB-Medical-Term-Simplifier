@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "medical-term-simplifier",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "New_current\\run_dev_server.bat"],
+      "port": 8000
+    }
+  ]
+}

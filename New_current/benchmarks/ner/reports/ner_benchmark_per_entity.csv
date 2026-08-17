@@ -1,0 +1,25 @@
+candidate,entity_type,precision,recall,f1_score,entity_level_accuracy,true_positives,false_positives,false_negatives,reference_count,predicted_count
+openmed-gliner,Disease,0.0,0.0,0.0,0.0,0,0,3,3,0
+openmed-gliner,Symptom,0.0,0.0,0.0,0.0,0,0,1,1,0
+openmed-gliner,Medication,0.0,0.0,0.0,0.0,0,1,1,1,1
+openmed-gliner,Procedure,0.0,0.0,0.0,0.0,0,0,2,2,0
+openmed-gliner,Anatomy,0.0,0.0,0.0,0.0,0,1,2,2,1
+openmed-gliner,Laboratory Test,0.0,0.0,0.0,0.0,0,2,1,1,2
+openmed-gliner,Measurement,0.0,0.0,0.0,0.0,0,3,3,3,3
+openmed-gliner,Medical Abbreviation,1.0,0.5,0.666667,0.5,1,0,1,2,1
+biomedical-ner-all,Disease,1.0,0.666667,0.8,0.666667,2,0,1,3,2
+biomedical-ner-all,Symptom,1.0,1.0,1.0,1.0,1,0,0,1,1
+biomedical-ner-all,Medication,1.0,1.0,1.0,1.0,1,0,0,1,1
+biomedical-ner-all,Procedure,0.166667,0.5,0.25,0.142857,1,5,1,2,6
+biomedical-ner-all,Anatomy,0.0,0.0,0.0,0.0,0,3,2,2,3
+biomedical-ner-all,Laboratory Test,0.0,0.0,0.0,0.0,0,0,1,1,0
+biomedical-ner-all,Measurement,0.0,0.0,0.0,0.0,0,2,3,3,2
+biomedical-ner-all,Medical Abbreviation,0.0,0.0,0.0,0.0,0,0,2,2,0
+modernbert-biomedical-ner,Disease,0.142857,0.333333,0.2,0.111111,1,6,2,3,7
+modernbert-biomedical-ner,Symptom,0.0,0.0,0.0,0.0,0,0,1,1,0
+modernbert-biomedical-ner,Medication,0.5,1.0,0.666667,0.5,1,1,0,1,2
+modernbert-biomedical-ner,Procedure,0.0,0.0,0.0,0.0,0,0,2,2,0
+modernbert-biomedical-ner,Anatomy,0.5,0.5,0.5,0.333333,1,1,1,2,2
+modernbert-biomedical-ner,Laboratory Test,0.0,0.0,0.0,0.0,0,1,1,1,1
+modernbert-biomedical-ner,Measurement,0.0,0.0,0.0,0.0,0,0,3,3,0
+modernbert-biomedical-ner,Medical Abbreviation,0.0,0.0,0.0,0.0,0,0,2,2,0
